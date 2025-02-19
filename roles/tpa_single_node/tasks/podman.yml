@@ -1,0 +1,50 @@
+---
+- name: Check Registry Username exists
+  ansible.builtin.assert:
+    that:
+      - tpa_single_node_registry_username is defined
+      - tpa_single_node_registry_username !=""
+    fail_msg: "tpa_single_node_registry_username doesn't exist, export the registry username and password"
+
+- name: Podman login to registry.redhat.io
+  when: rhel
+  ansible.builtin.command: podman login registry.redhat.io -u {{ tpa_single_node_registry_username }} -p {{ tpa_single_node_registry_password }}
+  register: podman_login_result
+  changed_when: '"Already logged in" not in podman_login_result'
+  no_log: true
+
+- name: Check if Podman login succeeded
+  ansible.builtin.fail:
+    msg: "Podman login failed!"
+  when: podman_login_result.rc != 0
+
+- name: Create Manifests/Configs Directory
+  ansible.builtin.file:
+    state: directory
+    dest: "{{ item }}"
+    mode: "0700"
+  loop:
+    - "{{ tpa_single_node_kube_manifest_dir }}"
+    - "{{ tpa_single_node_kube_manifest_dir }}/ConfigMaps"
+    - "{{ tpa_single_node_kube_manifest_dir }}/Deployments"
+    - "{{ tpa_single_node_kube_manifest_dir }}/Secrets"
+    - "{{ tpa_single_node_kube_manifest_dir }}/PVCs"
+
+- name: Check if RHTPA network exists
+  ansible.builtin.command:
+    cmd: "podman network inspect {{ tpa_single_node_podman_network }}"
+  register: network_inspect_result
+  failed_when: false
+  changed_when: false
+
+- name: Create RHTPA network
+  ansible.builtin.command:
+    cmd: "podman network create {{ tpa_single_node_podman_network }}"
+  when: network_inspect_result.rc != 0
+  changed_when: false
+
+- name: Pull trustification image from registry.redhat.io
+  when: rhel
+  ansible.builtin.command:
+    cmd: "podman pull {{ tpa_single_node_trustification_image }}"
+  changed_when: false
