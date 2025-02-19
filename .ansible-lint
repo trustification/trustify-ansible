@@ -1,0 +1,7 @@
+---
+exclude_paths:
+  - .github
+  - vm-testing
+  - input-template
+skip_list:
+  - name[template]

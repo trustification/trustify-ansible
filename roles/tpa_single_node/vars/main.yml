@@ -1,0 +1,60 @@
+---
+# vars file for tpa_scaffolding
+tpa_single_node_base_hostname: trustification
+tpa_single_node_certificates_dir: ./certs/
+tpa_single_node_config_dir: /etc/rhtpa
+tpa_single_node_kube_manifest_dir: "{{ tpa_single_node_config_dir }}/manifests"
+tpa_single_node_namespace: trustification
+tpa_single_node_podman_network: tcnet
+tpa_single_node_systemd_directory: /etc/systemd/system
+tpa_single_node_default_empty: ""
+
+# DB_SERVICE
+tpa_single_node_pg_host: "{{ lookup('env', 'TPA_PG_HOST') | default('192.168.124.1', true) }}"
+tpa_single_node_pg_port: 5432
+tpa_single_node_pg_db: trustify
+
+tpa_single_node_pg_admin: "{{ lookup('env', 'TPA_PG_ADMIN') }}" # postgres
+tpa_single_node_pg_admin_passwd: "{{ lookup('env', 'TPA_PG_ADMIN_PASSWORD') }}" # trustify
+tpa_single_node_pg_user: "{{ lookup('env', 'TPA_PG_USER') }}" # postgres
+tpa_single_node_pg_user_passwd: "{{ lookup('env', 'TPA_PG_USER_PASSWORD') }}" # trustify
+tpa_single_node_pg_ssl_mode: required
+
+# SSO_SERVICE
+tpa_single_node_oidc_issuer_url: http://192.168.124.1:8090 # "{{ lookup('env', 'TPA_OIDC_ISSUER_URL') | default('tpa_single_node_default_empty', true) }}"
+tpa_single_node_oidc_frontend_id: "{{ lookup('env', 'TPA_OIDC_FRONTEND_ID') | default('tpa_single_node_default_empty', true) }}"
+tpa_single_node_oidc_provider_client_id: "{{ lookup('env', 'TPA_OIDC_PROVIDER_CLIENT_ID') | default('tpa_single_node_default_empty', true) }}"
+tpa_single_node_oidc_provider_client_secret: "{{ lookup('env', 'TPA_OIDC_PROVIDER_CLIENT_SECRET') | default('tpa_single_node_default_empty', true) }}"
+
+## AWS OIDC fields
+tpa_single_node_aws_cognito_domain: "{{ lookup('env', 'TPA_OIDC_COGNITO_DOMAIN') | default('tpa_single_node_default_empty', true) }}"
+
+# TSL CA Certificates
+tpa_single_node_root_ca: "{{ tpa_single_node_certificates_dir }}/rootCA.crt"
+
+# TSL Certificates
+tpa_single_node_trust_cert_tls_crt_path: "{{ tpa_single_node_certificates_dir }}/trust-cert.crt"
+tpa_single_node_trust_cert_tls_key_path: "{{ tpa_single_node_certificates_dir }}/trust-cert.key"
+tpa_single_node_nginx_tls_crt_path: "{{ tpa_single_node_certificates_dir }}/trust-cert.crt"
+tpa_single_node_nginx_tls_key_path: "{{ tpa_single_node_certificates_dir }}/trust-cert.key"
+tpa_single_node_trust_server_cert_tls_crt_path: "{{ tpa_single_node_certificates_dir }}/trust-cert.crt"
+tpa_single_node_trust_server_cert_tls_key_path: "{{ tpa_single_node_certificates_dir }}/trust-cert.key"
+
+# Target node(s) - Secret and Configmap locations
+tpa_single_node_storage_secret: "{{ tpa_single_node_kube_manifest_dir }}/Secrets/storage.yaml"
+tpa_single_node_event_secret: "{{ tpa_single_node_kube_manifest_dir }}/Secrets/event.yaml"
+tpa_single_node_oidc_secret: "{{ tpa_single_node_kube_manifest_dir }}/Secrets/oidc.yaml"
+tpa_single_node_server_secret: "{{ tpa_single_node_kube_manifest_dir }}/Secrets/server.yaml"
+
+# ports
+
+# Services suspended
+
+# Probes
+tpa_single_node_probe_initial_delay_seconds: 30
+
+# defaults file for tpa_single_node
+tpa_single_node_system_packages:
+  - podman
+  - podman-plugins
+  - postgresql

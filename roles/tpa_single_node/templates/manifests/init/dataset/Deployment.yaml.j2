@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: init-dataset
+  namespace: "{{ tpa_single_node_namespace }}"
+  labels:
+    app: init-dataset
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: init-dataset
+  template:
+    metadata:
+      labels:
+        app: init-dataset
+    spec:
+      restartPolicy: OnFailure
+      volumes:
+        - name: oidc-secret
+          secret:
+            secretName: oidc_secret
+        - name: trust-anchor
+          configMap:
+            name: custom-trust-anchor
+      containers:
+        - name: run
+          image: "{{ tpa_single_node_trustification_image }}"
+          imagePullPolicy: IfNotPresent
+          command: [ "/bin/bash" ]
+          args:
+            - "-ce"
+            - |
+              set -e
+              /trust bombastic walker --sink https://{{ tpa_single_node_rhel_host }}:{{ tpa_single_node_bombastic_api_port }} --source file:/data/sbom --sender-root-certificates /etc/trust-anchor/tls.crt
+              /trust vexination walker --sink https://{{ tpa_single_node_rhel_host }}:{{ tpa_single_node_vexination_api_port }}/api/v1/vex --source file:/data/csaf --sender-root-certificates /etc/trust-anchor/tls.crt
+          env:
+            - name: OIDC_PROVIDER_CLIENT_ID
+              value: "{{ tpa_single_node_oidc_provider_client_id }}"
+            - name: OIDC_PROVIDER_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  key: client_secret
+                  name: oidc_secret
+            - name: OIDC_PROVIDER_ISSUER_URL
+              value: "{{ tpa_single_node_oidc_issuer_url }}"
+            - name: RUST_LOG
+              value: "info"
+          volumeMounts:
+            - mountPath: /etc/oidc-secret
+              name: oidc-secret
+            - name: trust-anchor
+              mountPath: /etc/trust-anchor
+              readOnly: true

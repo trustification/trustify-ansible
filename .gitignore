@@ -1,0 +1,22 @@
+venv/
+vm-testing/inventory
+vm-testing/vars.yml
+env/
+.venv/
+venv/
+.env/
+certs/*.pem
+certs/*.key
+certs/*.crt
+certs/*.cnf
+certs/*.srl
+.vagrant
+# artifacts/ directory produced by ansible-runner
+artifacts/
+# context/ directory produced by ansible-builder
+context/
+*.log
+*+00:00.json
+*.swp
+.vscode/
+.idea
