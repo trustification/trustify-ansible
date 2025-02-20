@@ -1,11 +1,4 @@
 ---
-
-- name: Generate Server secret manifest
-  ansible.builtin.template:
-    src: "{{ role_path }}/templates/manifests/infra/Secret-server-tls.yaml.j2"
-    dest: "{{ tpa_single_node_server_secret }}"
-    mode: "0600"
-
 - name: Deploy server
   ansible.builtin.include_tasks: install_manifest.yml
   vars:
