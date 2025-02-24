@@ -1,11 +1,4 @@
 ---
-
-- name: Generate Server secret manifest
-  ansible.builtin.template:
-    src: "{{ role_path }}/templates/manifests/infra/Secret-server-tls.yaml.j2"
-    dest: "{{ tpa_single_node_server_secret }}"
-    mode: "0600"
-
 - name: Deploy server
   ansible.builtin.include_tasks: install_manifest.yml
   vars:
@@ -14,3 +7,5 @@
       systemd_file: server
       network: "{{ tpa_single_node_podman_network }}"
       kube_file_content: "{{ lookup('ansible.builtin.template', 'manifests/server/Deployment.yaml.j2') | from_yaml }}"
+      configmaps:
+        - "{{ tpa_single_node_kube_manifest_dir }}/ConfigMaps/server-api.yaml"
