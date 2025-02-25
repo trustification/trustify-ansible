@@ -29,3 +29,12 @@
 
 - name: Start Server
   ansible.builtin.include_tasks: server/trustd.yml
+
+- name: Generate Persistent Volume Claim for importer
+  ansible.builtin.template:
+    src: "{{ role_path }}/templates/manifests/importer/PersistentVolumeClaim.yaml.j2"
+    dest: "{{ tpa_single_node_kube_manifest_dir }}/PVCs/importer.yaml"
+    mode: "0600"
+
+- name: Start Importer
+  ansible.builtin.include_tasks: importer/importer.yml
