@@ -73,11 +73,11 @@ spec:
             - name: TRUSTD_STORAGE_FS_PATH
               value: /data/storage
             - name: SWAGGER_UI_OIDC_ISSUER_URL
-              value: "{{ tpa_single_node_oidc_issuer_url }}/realms/chicken"
+              value: "{{ tpa_single_node_oidc_issuer_url }}"
             - name: SWAGGER_UI_OIDC_CLIENT_ID
               value: "{{ tpa_single_node_oidc_frontend_id }}"
             - name: UI_ISSUER_URL
-              value: "{{ tpa_single_node_oidc_issuer_url }}/realms/chicken"
+              value: "{{ tpa_single_node_oidc_issuer_url }}"
             - name: UI_CLIENT_ID
               value: "{{ tpa_single_node_oidc_frontend_id }}"
           ports:
