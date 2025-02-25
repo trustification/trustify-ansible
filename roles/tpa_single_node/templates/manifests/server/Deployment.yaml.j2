@@ -59,13 +59,13 @@ spec:
             - name: TRUSTD_DB_HOST
               value: "{{ tpa_single_node_pg_host }}"
             - name: TRUSTD_DB_PORT
-              value:  "{{ tpa_single_node_pg_port }}"
+              value: "{{ tpa_single_node_pg_port }}"
             - name: TRUSTD_DB_NAME
               value: "{{ tpa_single_node_pg_db }}"
             - name: TRUSTD_DB_USER
               value: "{{ tpa_single_node_pg_user }}"
             - name: TRUSTD_DB_PASSWORD
-              value: "{{  tpa_single_node_pg_user_passwd }}"
+              value: "{{ tpa_single_node_pg_user_passwd }}"
             - name: TRUSTD_DB_SSLMODE
               value: allow
             - name: TRUSTD_STORAGE_STRATEGY
@@ -73,13 +73,13 @@ spec:
             - name: TRUSTD_STORAGE_FS_PATH
               value: /data/storage
             - name: SWAGGER_UI_OIDC_ISSUER_URL
-              value: https://ssochange-me/realms/chicken
+              value: "{{ tpa_single_node_oidc_issuer_url }}"
             - name: SWAGGER_UI_OIDC_CLIENT_ID
-              value: frontend
+              value: "{{ tpa_single_node_oidc_frontend_id }}"
             - name: UI_ISSUER_URL
-              value: https://ssochange-me/realms/chicken
+              value: "{{ tpa_single_node_oidc_issuer_url }}"
             - name: UI_CLIENT_ID
-              value: frontend
+              value: "{{ tpa_single_node_oidc_frontend_id }}"
           ports:
             - containerPort: 9010
               protocol: TCP
