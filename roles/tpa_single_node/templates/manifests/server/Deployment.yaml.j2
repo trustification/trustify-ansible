@@ -69,10 +69,27 @@ spec:
               value: "{{ tpa_single_node_pg_user_passwd }}"
             - name: TRUSTD_DB_SSLMODE
               value: allow
+{% if 'fs' in tpa_single_node_storage_type %}
+
             - name: TRUSTD_STORAGE_STRATEGY
               value: fs
             - name: TRUSTD_STORAGE_FS_PATH
               value: /data/storage
+{% endif %}
+{% if 's3' in tpa_single_node_storage_type %}
+            - name: TRUSTD_STORAGE_STRATEGY
+              value: s3
+            - name: TRUSTD_S3_ENDPOINT
+              value: "{{ tpa_single_node_storage_endpoint }}"
+            - name: TRUSTD_S3_ACCESS_KEY
+              value: "{{ tpa_single_node_storage_access_key }}"
+            - name: TRUSTD_S3_SECRET_KEY
+              value: "{{ tpa_single_node_storage_secret_key }}"
+            - name: TRUSTD_S3_BUCKET
+              value: "{{ tpa_single_node_storage_bucket }}"
+            - name: TRUSTD_S3_REGION
+              value: "{{ tpa_single_node_storage_region }}"
+{% endif %}
             - name: SWAGGER_UI_OIDC_ISSUER_URL
               value: "{{ tpa_single_node_oidc_issuer_url }}"
             - name: SWAGGER_UI_OIDC_CLIENT_ID
@@ -95,8 +112,10 @@ spec:
             - name: config-auth
               mountPath: /etc/config/auth.yaml
               subPath: auth.yaml
+{% if 'fs' in tpa_single_node_storage_type %}
             - name: storage
               mountPath: /data/storage
+{% endif %}
       volumes:
         - name: tls
           secret:
@@ -104,6 +123,8 @@ spec:
         - name: config-auth
           configMap:
             name: server-api-auth
+{% if 'fs' in tpa_single_node_storage_type %}
         - name: storage
           persistentVolumeClaim:
             claimName: storage
+{% endif %}

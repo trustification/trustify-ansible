@@ -29,6 +29,16 @@ tpa_single_node_oidc_provider_client_secret: "{{ lookup('env', 'TPA_OIDC_PROVIDE
 ## AWS OIDC fields
 tpa_single_node_aws_cognito_domain: "{{ lookup('env', 'TPA_OIDC_COGNITO_DOMAIN') | default('tpa_single_node_default_empty', true) }}"
 
+# Storage Service, default fs
+tpa_single_node_storage_type: "{{ lookup('env', 'TRUSTD_STORAGE_STRATEGY') | default('fs', true) }}" # fs/s3
+
+# Storage Service if is used tpa_single_node_storage_type: s3
+tpa_single_node_storage_endpoint: "{{ lookup('env', 'TRUSTD_S3_ENDPOINT') }}" # Minio storage URL pointing to API 9000
+tpa_single_node_storage_access_key: "{{ lookup('env', 'TRUSTD_S3_ACCESS_KEY') }}" # S3/minio root username
+tpa_single_node_storage_secret_key: "{{ lookup('env', 'TRUSTD_S3_SECRET_KEY') }}" # S3/minio root password
+tpa_single_node_storage_region: "{{ lookup('env', 'TRUSTD_S3_REGION') | default('eu-west-1', true) }}"
+tpa_single_node_storage_bucket: "{{ lookup('env', 'TRUSTD_S3_BUCKET') }}"   # <storage bucket name>
+
 # TSL CA Certificates
 tpa_single_node_root_ca: "{{ tpa_single_node_certificates_dir }}/rootCA.crt"
 
