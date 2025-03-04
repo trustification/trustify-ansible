@@ -51,12 +51,17 @@ spec:
               value: '[::]:9010'
             - name: HTTP_SERVER_BIND_ADDR
               value: '::'
+{% if tpa_single_node_ui_tls == 'true' %}
             - name: HTTP_SERVER_TLS_ENABLED
               value: 'true'
             - name: HTTP_SERVER_TLS_KEY_FILE
               value: /etc/tls/tls.key
             - name: HTTP_SERVER_TLS_CERTIFICATE_FILE
               value: /etc/tls/tls.crt
+{% else %}
+            - name: HTTP_SERVER_TLS_ENABLED
+              value: 'false'
+{% endif %}
             - name: TRUSTD_DB_HOST
               value: "{{ tpa_single_node_pg_host }}"
             - name: TRUSTD_DB_PORT
@@ -88,6 +93,11 @@ spec:
             - containerPort: 8080
               name: endpoint
               protocol: TCP
+{% if tpa_single_node_ui_tls == 'true' %}
+              hostPort: 443
+{% else %}
+              hostPort: 80
+{% endif %}
           volumeMounts:
             - mountPath: /etc/tls
               name: tls

@@ -9,14 +9,19 @@ metadata:
     app.kubernetes.io/instance: redhat-trusted-profile-analyzer    
     app.kubernetes.io/version: 2.0.0
 data:
-    auth.yaml: "\nauthentication:\n  clients:\n\n    - clientId: {{ tpa_single_node_oidc_frontend_id }}\n    \
-    \  issuerUrl: {{ tpa_single_node_oidc_issuer_url }}\n      scopeMappings: &keycloakScopeMappings\n\
-    \        \"create:document\": [ \"create.advisory\", \"create.importer\",\
-    \ \"create.metadata\", \"create.sbom\", \"create.weakness\", \"upload.dataset\"\
-    \ ]\n        \"read:document\": [ \"ai\", \"read.advisory\", \"read.importer\"\
-    , \"read.metadata\", \"read.sbom\", \"read.weakness\" ]\n        \"update:document\"\
-    : [ \"update.advisory\", \"update.importer\", \"update.metadata\", \"update.sbom\"\
-    , \"update.weakness\" ]\n        \"delete:document\": [ \"delete.advisory\"\
-    , \"delete.importer\", \"delete.metadata\", \"delete.sbom\", \"delete.vulnerability\"\
-    , \"delete.weakness\" ]\n\n    - clientId: cli\n      issuerUrl: {{ tpa_single_node_oidc_issuer_url }}\n\
-    \      scopeMappings: *keycloakScopeMappings\n"
+    auth.yaml: | 
+      authentication:
+        clients:
+
+          - clientId: {{ tpa_single_node_oidc_frontend_id }}
+            issuerUrl: {{ tpa_single_node_oidc_issuer_url }}
+            scopeMappings: &keycloakScopeMappings
+              "create:document": [ "create.advisory", "create.importer", "create.metadata", "create.sbom", "create.weakness", "upload.dataset" ]
+              "read:document": [ "ai", "read.advisory", "read.importer", "read.metadata", "read.sbom", "read.weakness" ]
+              "update:document": [ "update.advisory", "update.importer", "update.metadata", "update.sbom", "update.weakness" ]
+              "delete:document": [ "delete.advisory", "delete.importer", "delete.metadata", "delete.sbom", "delete.vulnerability", "delete.weakness" ]
+
+          - clientId: {{ tpa_single_node_oidc_provider_client_id }}
+            issuerUrl: {{ tpa_single_node_oidc_issuer_url }}
+            scopeMappings: *keycloakScopeMappings
+
