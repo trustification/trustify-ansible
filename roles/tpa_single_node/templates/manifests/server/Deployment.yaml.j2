@@ -25,15 +25,17 @@ spec:
           image: "{{ tpa_single_node_trustification_image }}"
           imagePullPolicy: IfNotPresent
           livenessProbe:
-            initialDelaySeconds: 2
-            httpGet:
-              path: /health/live
-              port: 9010
+            exec:
+              command:
+                - sh
+                - -c
+                - "echo > /dev/tcp/localhost/9010"
           readinessProbe:
-            initialDelaySeconds: 2
-            httpGet:
-              path: /health/ready
-              port: 9010
+            exec:
+              command:
+                - sh
+                - -c
+                - "echo > /dev/tcp/localhost/9010"
           command:
             - /usr/local/bin/trustd
           args:
@@ -51,12 +53,17 @@ spec:
               value: '[::]:9010'
             - name: HTTP_SERVER_BIND_ADDR
               value: '::'
+{% if tpa_single_node_ui_tls == 'true' %}
             - name: HTTP_SERVER_TLS_ENABLED
               value: 'true'
             - name: HTTP_SERVER_TLS_KEY_FILE
               value: /etc/tls/tls.key
             - name: HTTP_SERVER_TLS_CERTIFICATE_FILE
               value: /etc/tls/tls.crt
+{% else %}
+            - name: HTTP_SERVER_TLS_ENABLED
+              value: 'false'
+{% endif %}
             - name: TRUSTD_DB_HOST
               value: "{{ tpa_single_node_pg_host }}"
             - name: TRUSTD_DB_PORT
@@ -85,9 +92,16 @@ spec:
             - containerPort: 9010
               protocol: TCP
               name: infra
+              hostPort: 9010
             - containerPort: 8080
               name: endpoint
               protocol: TCP
+{% if tpa_single_node_ui_tls == 'true' %}
+              hostPort: 443
+{% else %}
+              hostPort: 80
+{% endif %}
+              hostIP: {{ tpa_single_node_rhel_host }}
           volumeMounts:
             - mountPath: /etc/tls
               name: tls
