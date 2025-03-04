@@ -26,6 +26,7 @@
     src: "{{ role_path }}/templates/manifests/server/PersistentVolumeClaim.yaml.j2"
     dest: "{{ tpa_single_node_kube_manifest_dir }}/PVCs/server.yaml"
     mode: "0600"
+  when: "'fs' in (tpa_single_node_storage_type | string | safe)"
 
 - name: Start Server
   ansible.builtin.include_tasks: server/trustd.yml
