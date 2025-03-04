@@ -25,15 +25,17 @@ spec:
           image: "{{ tpa_single_node_trustification_image }}"
           imagePullPolicy: IfNotPresent
           livenessProbe:
-            initialDelaySeconds: 2
-            httpGet:
-              path: /health/live
-              port: 9010
+            exec:
+              command:
+                - sh
+                - -c
+                - "echo > /dev/tcp/localhost/9010"
           readinessProbe:
-            initialDelaySeconds: 2
-            httpGet:
-              path: /health/ready
-              port: 9010
+            exec:
+              command:
+                - sh
+                - -c
+                - "echo > /dev/tcp/localhost/9010"
           command:
             - /usr/local/bin/trustd
           args:
