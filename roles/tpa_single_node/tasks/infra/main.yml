@@ -14,13 +14,6 @@
 - name: Migrate db
   ansible.builtin.include_tasks: infra/migrate-db.yml
 
-- name: Create configmap auth for server
-  ansible.builtin.include_tasks: infra/component_auth.yml
-  vars:
-    component:
-      name: "server"
-      type: "api"
-
 - name: Generate Persistent Volume Claim for server
   ansible.builtin.template:
     src: "{{ role_path }}/templates/manifests/server/PersistentVolumeClaim.yaml.j2"

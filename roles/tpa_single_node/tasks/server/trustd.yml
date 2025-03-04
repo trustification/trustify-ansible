@@ -1,4 +1,11 @@
 ---
+- name: Create configmap for server
+  ansible.builtin.template:
+    src: "{{ role_path }}/templates/manifests/server/Configmap.yaml.j2"
+    dest: "{{ tpa_single_node_kube_manifest_dir }}/ConfigMaps/server-api.yaml"
+    mode: "0600"
+  register: configmap_server_api
+
 - name: Deploy server
   ansible.builtin.include_tasks: install_manifest.yml
   vars:
