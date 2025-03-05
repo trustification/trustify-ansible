@@ -32,12 +32,12 @@ tpa_single_node_oidc_client_secret: "{{ lookup('env', 'TPA_OIDC_CLIENT_SECRET') 
 tpa_single_node_aws_cognito_domain: "{{ lookup('env', 'TPA_OIDC_COGNITO_DOMAIN') | default('None', true) }}"
 
 # Storage Service
-tpa_single_node_storage_type: "{{ lookup('env', 'TPA_STORAGE_TYPE') | default('file', true) }}"
-tpa_single_node_storage_access_key: "{{ lookup('env', 'TPA_STORAGE_ACCESS_KEY') | default('None', true)  }}" # S3/minio root username
-tpa_single_node_storage_secret_key: "{{ lookup('env', 'TPA_STORAGE_SECRET_KEY') | default('None', true)  }}" # S3/minio root password
-tpa_single_node_storage_bucket: "{{ lookup('env', 'TPA_STORAGE_S3_BUCKET') | default('None', true)  }}" # S3/minio bucket
-tpa_single_node_storage_region: "{{ lookup('env', 'TPA_STORAGE_REGION') | default('eu-west-1', true)  }}" # S3/minio region
-tpa_single_node_storage_endpoint: "{{ lookup('env', 'TPA_STORAGE_MINIO_ENDPOINT') | default('None', true)  }}" # Minio endpoint
+tpa_single_node_storage_type: "{{ lookup('env', 'TPA_STORAGE_TYPE') | default('fs', true) }}"
+tpa_single_node_storage_access_key: "{{ lookup('env', 'TPA_STORAGE_ACCESS_KEY') | default('None', true) }}"  # S3/minio root username
+tpa_single_node_storage_secret_key: "{{ lookup('env', 'TPA_STORAGE_SECRET_KEY') | default('None', true) }}" # S3/minio root password
+tpa_single_node_storage_bucket: "{{ lookup('env', 'TPA_STORAGE_S3_BUCKET') | default('None', true) }}" # S3/minio bucket
+tpa_single_node_storage_region: "{{ lookup('env', 'TPA_STORAGE_REGION') | default('eu-west-1', true) }}" # S3/minio region
+tpa_single_node_storage_endpoint: "{{ lookup('env', 'TPA_STORAGE_MINIO_ENDPOINT') | default('None', true) }}" # Minio endpoint
 
 # TSL CA Certificates
 tpa_single_node_root_ca: "{{ tpa_single_node_certificates_dir }}/rootCA.crt"
