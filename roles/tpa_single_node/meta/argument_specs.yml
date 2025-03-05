@@ -95,11 +95,6 @@ argument_specs:
         type: "str"
         version_added: "2.0.0"
         default: "disable"
-      tpa_single_node_oidc_type:
-        description: "Keycloak or AWS Cognito"
-        type: "str"
-        version_added: "2.0.0"
-        default: "keycloak"
       tpa_single_node_oidc_issuer_url:
         description: "Readed from TPA_OIDC_ISSUER_URL env var"
         type: "str"
@@ -110,13 +105,13 @@ argument_specs:
         type: "str"
         required: false
         version_added: "2.0.0"
-      tpa_single_node_oidc_provider_client_id:
-        description: "Readed from TPA_OIDC_PROVIDER_CLIENT_ID env var"
+      tpa_single_node_oidc_client_id:
+        description: "Readed from TPA_OIDC_CLIENT_ID env var"
         type: "str"
         required: false
         version_added: "2.0.0"
-      tpa_single_node_oidc_provider_client_secret:
-        description: "Readed from TPA_OIDC_PROVIDER_CLIENT_SECRET env var"
+      tpa_single_node_oidc_client_secret:
+        description: "Readed from TPA_OIDC_CLIENT_SECRET env var"
         type: "str"
         required: false
         version_added: "2.0.0"

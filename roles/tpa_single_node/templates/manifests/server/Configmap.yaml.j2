@@ -13,6 +13,75 @@ data:
       authentication:
         clients:
 
+{%- if 'cognito' in tpa_single_node_oidc_issuer_url %}
+
+          - clientId: {{ tpa_single_node_oidc_frontend_id }}
+            issuerUrl: {{ tpa_single_node_oidc_issuer_url }}
+
+            additionalPermissions:
+              - "ai"
+              - "read.advisory"
+              - "read.importer"
+              - "read.metadata"
+              - "read.sbom"
+              - "read.weakness"
+
+            groupSelector: "$.['cognito:groups'][*]"
+
+            groupMappings:
+              manager:
+                - "create.advisory"
+                - "create.importer"
+                - "create.metadata"
+                - "create.sbom"
+                - "create.weakness"
+
+                - "upload.dataset"
+                - "update.advisory"
+                - "update.importer"
+                - "update.metadata"
+                - "update.sbom"
+                - "update.weakness"
+
+                - "delete.advisory"
+                - "delete.importer"
+                - "delete.metadata"
+                - "delete.sbom"
+                - "delete.vulnerability"
+                - "delete.weakness"
+
+          - clientId: {{ tpa_single_node_oidc_client_id }}
+            issuerUrl: {{ tpa_single_node_oidc_issuer_url }}
+
+            scopeMappings:
+              "trustify/advisory":
+                - "create.advisory"
+                - "read.advisory"
+                - "update.advisory"
+                - "delete.advisory"
+              "trustify/importer":
+                - "create.importer"
+                - "read.importer"
+                - "update.importer"
+                - "delete.importer"
+              "trustify/metadata":
+                - "create.metadata"
+                - "read.metadata"
+                - "update.metadata"
+                - "delete.metadata"
+              "trustify/sbom":
+                - "create.sbom"
+                - "read.sbom"
+                - "update.sbom"
+                - "delete.sbom"
+              "trustify/ai":
+                - "ai"
+              "trustify/admin":
+                - "upload.dataset"
+                - "delete.vulnerability"
+
+{%- else %}
+
           - clientId: {{ tpa_single_node_oidc_frontend_id }}
             issuerUrl: {{ tpa_single_node_oidc_issuer_url }}
             scopeMappings: &keycloakScopeMappings
@@ -24,4 +93,5 @@ data:
           - clientId: cli
             issuerUrl: {{ tpa_single_node_oidc_issuer_url }}
             scopeMappings: *keycloakScopeMappings
-
+            
+{%- endif %}
