@@ -135,16 +135,6 @@ argument_specs:
         type: "str"
         required: true
         version_added: "2.0.0"
-      tpa_single_node_nginx_tls_crt_path:
-        description: "nginx-tls-certificate.pem path on the controller machine"
-        type: "str"
-        required: true
-        version_added: "2.0.0"
-      tpa_single_node_nginx_tls_key_path:
-        description: "nginx-tls.key path on the controller machine"
-        type: "str"
-        required: true
-        version_added: "2.0.0"
       tpa_single_node_storage_secret:
         description: "storage-secret.yaml path on the target machine"
         type: "str"
