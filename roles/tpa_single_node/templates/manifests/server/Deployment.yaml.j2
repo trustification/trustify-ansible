@@ -76,18 +76,48 @@ spec:
               value: "{{ tpa_single_node_pg_user_passwd }}"
             - name: TRUSTD_DB_SSLMODE
               value: allow
+{% if tpa_single_node_storage_type == 'file' %}
             - name: TRUSTD_STORAGE_STRATEGY
               value: fs
             - name: TRUSTD_STORAGE_FS_PATH
               value: /data/storage
+{% else %}
+            - name: TRUSTD_STORAGE_STRATEGY
+              value: s3
+            - name: TRUSTD_S3_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: storage_secret
+                  key: storage_access_key
+            - name: TRUSTD_S3_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: storage_secret
+                  key: storage_secret_key
+            - name: TRUSTD_S3_BUCKET
+              value: "{{ tpa_single_node_storage_bucket }}"
+            - name: TRUSTD_S3_REGION
+              value: "{{ tpa_single_node_storage_region }}"
+{% if tpa_single_node_storage_endpoint != "None" %}
+            - name: STORAGE_ENDPOINT
+              value: "{{ tpa_single_node_storage_endpoint }}"
+{% endif %}
+{% endif %}
+
             - name: SWAGGER_UI_OIDC_ISSUER_URL
               value: "{{ tpa_single_node_oidc_issuer_url }}"
             - name: SWAGGER_UI_OIDC_CLIENT_ID
-              value: "{{ tpa_single_node_oidc_frontend_id }}"
+              valueFrom:
+                secretKeyRef:
+                  name: oidc_secret
+                  key: front_end
             - name: UI_ISSUER_URL
               value: "{{ tpa_single_node_oidc_issuer_url }}"
             - name: UI_CLIENT_ID
-              value: "{{ tpa_single_node_oidc_frontend_id }}"
+              valueFrom:
+                secretKeyRef:
+                  name: oidc_secret
+                  key: front_end
           ports:
             - containerPort: 9010
               protocol: TCP
@@ -96,12 +126,13 @@ spec:
             - containerPort: 8080
               name: endpoint
               protocol: TCP
+              hostIP: {{ tpa_single_node_rhel_host }}
 {% if tpa_single_node_ui_tls == 'true' %}
               hostPort: 443
 {% else %}
               hostPort: 80
 {% endif %}
-              hostIP: {{ tpa_single_node_rhel_host }}
+
           volumeMounts:
             - mountPath: /etc/tls
               name: tls
@@ -109,8 +140,15 @@ spec:
             - name: config-auth
               mountPath: /etc/config/auth.yaml
               subPath: auth.yaml
+            - name: oidc-secret
+              mountPath: /etc/oidcsecret
+{% if tpa_single_node_storage_type == 'file' %}
             - name: storage
               mountPath: /data/storage
+{% else %}
+            - name: storage-secret
+              mountPath: /etc/storagesecret
+{% endif %}
       volumes:
         - name: tls
           secret:
@@ -118,6 +156,15 @@ spec:
         - name: config-auth
           configMap:
             name: server-api-auth
+        - name: oidc-secret
+          secret:
+            secretName: oidc_secret
+{% if tpa_single_node_storage_type == 'file' %}
         - name: storage
           persistentVolumeClaim:
             claimName: storage
+{% else %}
+        - name: storage-secret
+          secret:
+            secretName: storage_secret
+{% endif %}

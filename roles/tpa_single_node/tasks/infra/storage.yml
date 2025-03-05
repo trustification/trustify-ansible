@@ -1,0 +1,11 @@
+---
+- name: Generate Storage secret manifest
+  ansible.builtin.template:
+    src: "{{ role_path }}/templates/manifests/infra/Secret-storage.yaml.j2"
+    dest: "{{ tpa_single_node_storage_secret }}"
+    mode: "0600"
+
+- name: Apply storage secret manifest
+  ansible.builtin.command:
+    cmd: "podman kube play {{ tpa_single_node_storage_secret }}"
+  changed_when: false

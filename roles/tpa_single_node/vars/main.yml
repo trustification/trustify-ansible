@@ -7,7 +7,6 @@ tpa_single_node_kube_manifest_dir: "{{ tpa_single_node_config_dir }}/manifests"
 tpa_single_node_namespace: trustification
 tpa_single_node_podman_network: tcnet
 tpa_single_node_systemd_directory: /etc/systemd/system
-tpa_single_node_default_empty: ""
 
 # UI
 tpa_single_node_ui_tls: "{{ lookup('env', 'TPA_UI_TLS') | default('true', true) }}"
@@ -25,12 +24,20 @@ tpa_single_node_pg_ssl_mode: required
 
 # SSO_SERVICE
 tpa_single_node_oidc_issuer_url: "{{ lookup('env', 'TPA_OIDC_ISSUER_URL') | default('192.168.124.1:8090', true) }}"
-tpa_single_node_oidc_frontend_id: "{{ lookup('env', 'TPA_OIDC_FRONTEND_ID') | default('tpa_single_node_default_empty', true) }}"
-tpa_single_node_oidc_client_id: "{{ lookup('env', 'TPA_OIDC_CLIENT_ID') | default('tpa_single_node_default_empty', true) }}"
-tpa_single_node_oidc_client_secret: "{{ lookup('env', 'TPA_OIDC_CLIENT_SECRET') | default('tpa_single_node_default_empty', true) }}"
+tpa_single_node_oidc_frontend_id: "{{ lookup('env', 'TPA_OIDC_FRONTEND_ID') | default('None', true) }}"
+tpa_single_node_oidc_client_id: "{{ lookup('env', 'TPA_OIDC_CLIENT_ID') | default('None', true) }}"
+tpa_single_node_oidc_client_secret: "{{ lookup('env', 'TPA_OIDC_CLIENT_SECRET') | default('None', true) }}"
 
 ## AWS OIDC fields
-tpa_single_node_aws_cognito_domain: "{{ lookup('env', 'TPA_OIDC_COGNITO_DOMAIN') | default('tpa_single_node_default_empty', true) }}"
+tpa_single_node_aws_cognito_domain: "{{ lookup('env', 'TPA_OIDC_COGNITO_DOMAIN') | default('None', true) }}"
+
+# Storage Service
+tpa_single_node_storage_type: "{{ lookup('env', 'TPA_STORAGE_TYPE') | default('file', true) }}"
+tpa_single_node_storage_access_key: "{{ lookup('env', 'TPA_STORAGE_ACCESS_KEY') | default('None', true)  }}" # S3/minio root username
+tpa_single_node_storage_secret_key: "{{ lookup('env', 'TPA_STORAGE_SECRET_KEY') | default('None', true)  }}" # S3/minio root password
+tpa_single_node_storage_bucket: "{{ lookup('env', 'TPA_STORAGE_S3_BUCKET') | default('None', true)  }}" # S3/minio bucket
+tpa_single_node_storage_region: "{{ lookup('env', 'TPA_STORAGE_REGION') | default('eu-west-1', true)  }}" # S3/minio region
+tpa_single_node_storage_endpoint: "{{ lookup('env', 'TPA_STORAGE_MINIO_ENDPOINT') | default('None', true)  }}" # Minio endpoint
 
 # TSL CA Certificates
 tpa_single_node_root_ca: "{{ tpa_single_node_certificates_dir }}/rootCA.crt"
@@ -48,10 +55,6 @@ tpa_single_node_storage_secret: "{{ tpa_single_node_kube_manifest_dir }}/Secrets
 tpa_single_node_event_secret: "{{ tpa_single_node_kube_manifest_dir }}/Secrets/event.yaml"
 tpa_single_node_oidc_secret: "{{ tpa_single_node_kube_manifest_dir }}/Secrets/oidc.yaml"
 tpa_single_node_server_secret: "{{ tpa_single_node_kube_manifest_dir }}/Secrets/server.yaml"
-
-# ports
-
-# Services suspended
 
 # Probes
 tpa_single_node_probe_initial_delay_seconds: 30
