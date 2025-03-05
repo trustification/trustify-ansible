@@ -13,22 +13,7 @@ data:
       authentication:
         clients:
 
-{%- if tpa_single_node_oidc == 'keycloak' %}
-
-          - clientId: {{ tpa_single_node_oidc_frontend_id }}
-            issuerUrl: {{ tpa_single_node_oidc_issuer_url }}
-            scopeMappings: &keycloakScopeMappings
-              "create:document": [ "create.advisory", "create.importer", "create.metadata", "create.sbom", "create.weakness", "upload.dataset" ]
-              "read:document": [ "ai", "read.advisory", "read.importer", "read.metadata", "read.sbom", "read.weakness" ]
-              "update:document": [ "update.advisory", "update.importer", "update.metadata", "update.sbom", "update.weakness" ]
-              "delete:document": [ "delete.advisory", "delete.importer", "delete.metadata", "delete.sbom", "delete.vulnerability", "delete.weakness" ]
-
-          - clientId: cli
-            issuerUrl: {{ tpa_single_node_oidc_issuer_url }}
-            scopeMappings: *keycloakScopeMappings
-{%- endif %}
-
-{%- if tpa_single_node_oidc == 'cognito' %}
+{%- if 'cognito' in tpa_single_node_oidc_issuer_url %}
 
           - clientId: {{ tpa_single_node_oidc_frontend_id }}
             issuerUrl: {{ tpa_single_node_oidc_issuer_url }}
@@ -94,4 +79,19 @@ data:
               "trustify/admin":
                 - "upload.dataset"
                 - "delete.vulnerability"
-{% endif %}
+
+{%- else %}
+
+          - clientId: {{ tpa_single_node_oidc_frontend_id }}
+            issuerUrl: {{ tpa_single_node_oidc_issuer_url }}
+            scopeMappings: &keycloakScopeMappings
+              "create:document": [ "create.advisory", "create.importer", "create.metadata", "create.sbom", "create.weakness", "upload.dataset" ]
+              "read:document": [ "ai", "read.advisory", "read.importer", "read.metadata", "read.sbom", "read.weakness" ]
+              "update:document": [ "update.advisory", "update.importer", "update.metadata", "update.sbom", "update.weakness" ]
+              "delete:document": [ "delete.advisory", "delete.importer", "delete.metadata", "delete.sbom", "delete.vulnerability", "delete.weakness" ]
+
+          - clientId: cli
+            issuerUrl: {{ tpa_single_node_oidc_issuer_url }}
+            scopeMappings: *keycloakScopeMappings
+            
+{%- endif %}

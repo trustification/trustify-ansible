@@ -95,11 +95,6 @@ argument_specs:
         type: "str"
         version_added: "2.0.0"
         default: "disable"
-      tpa_single_node_oidc_type:
-        description: "Keycloak or AWS Cognito"
-        type: "str"
-        version_added: "2.0.0"
-        default: "keycloak"
       tpa_single_node_oidc_issuer_url:
         description: "Readed from TPA_OIDC_ISSUER_URL env var"
         type: "str"

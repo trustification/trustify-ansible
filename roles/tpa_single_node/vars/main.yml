@@ -29,8 +29,6 @@ tpa_single_node_oidc_frontend_id: "{{ lookup('env', 'TPA_OIDC_FRONTEND_ID') | de
 tpa_single_node_oidc_client_id: "{{ lookup('env', 'TPA_OIDC_CLIENT_ID') | default('tpa_single_node_default_empty', true) }}"
 tpa_single_node_oidc_client_secret: "{{ lookup('env', 'TPA_OIDC_CLIENT_SECRET') | default('tpa_single_node_default_empty', true) }}"
 
-# OIDC
-tpa_single_node_oidc: "{{ lookup('env', 'TPA_OIDC') | default('tpa_single_node_default_empty', true) }}"
 ## AWS OIDC fields
 tpa_single_node_aws_cognito_domain: "{{ lookup('env', 'TPA_OIDC_COGNITO_DOMAIN') | default('tpa_single_node_default_empty', true) }}"
 

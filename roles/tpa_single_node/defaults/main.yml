@@ -1,3 +1,0 @@
----
-# SSO_SERVICE
-tpa_single_node_oidc_type: keycloak # Either Keycloak or AWS Cognito
