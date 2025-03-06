@@ -76,7 +76,7 @@ spec:
               value: "{{ tpa_single_node_pg_user_passwd }}"
             - name: TRUSTD_DB_SSLMODE
               value: allow
-{% if tpa_single_node_storage_type == 'fs' %}
+{% if tpa_single_node_storage_region == 'None' %}
             - name: TRUSTD_STORAGE_STRATEGY
               value: fs
             - name: TRUSTD_STORAGE_FS_PATH
@@ -142,7 +142,7 @@ spec:
               subPath: auth.yaml
             - name: oidc-secret
               mountPath: /etc/oidcsecret
-{% if tpa_single_node_storage_type == 'fs' %}
+{% if tpa_single_node_storage_endpoint == 'None' %}
             - name: storage
               mountPath: /data/storage
 {% else %}
@@ -159,7 +159,7 @@ spec:
         - name: oidc-secret
           secret:
             secretName: oidc_secret
-{% if tpa_single_node_storage_type == 'fs' %}
+{% if tpa_single_node_storage_endpoint == 'None' %}
         - name: storage
           persistentVolumeClaim:
             claimName: storage
