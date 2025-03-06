@@ -120,11 +120,6 @@ argument_specs:
         type: "str"
         required: false
         version_added: "2.0.0"
-      tpa_single_node_storage_type:
-        description: "Read from 'TPA_STORAGE_TYPE' env var"
-        type: "str"
-        required: true
-        version_added: "2.0.0"
       tpa_single_node_storage_access_key:
         description: "Read from 'TPA_STORAGE_ACCESS_KEY' env var"
         type: "str"
@@ -145,7 +140,7 @@ argument_specs:
         type: "str"
         required: false
         version_added: "2.0.0"
-      tpa_single_node_storage_endpoint:
+      tpa_single_node_storage_minio_endpoint:
         description: "Read from 'TPA_STORAGE_MINIO_ENDPOINT' env var"
         type: "str"
         required: false
