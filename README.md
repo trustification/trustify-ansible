@@ -1,6 +1,6 @@
 # Red Hat Trusted Profile Analyzer Ansible collection
 
-The purpose of this Ansible collection is to automate the deployment of the Red Hat Trusted Profile Analyzer (RHTPA) service on Red Hat Enterprise Linux (RHEL).
+The purpose of this Ansible collection is to automate the deployment of the Red Hat Trusted Profile Analyzer (RHTPA 2) service on Red Hat Enterprise Linux (RHEL).
 
 > [!IMPORTANT]
 Deploying RHTPA by using Ansible is a Technology Preview feature only.
@@ -11,7 +11,7 @@ See the support scope for [Red Hat Technology Preview](https://access.redhat.com
 
 ## Description
 
-The RHTPA service is the downstream redistribution of the [Trustify](https://github.com/trustification/trustify) project.
+The RHTPA 2 service is the downstream redistribution of the [Trustify](https://github.com/trustification/trustify) project.
 The automation contained within this Git repository installs and configures the components of RHTPA to run on a single RHEL server by using a standalone containerized deployment. A Kubernetes-based manifest creates containers that uses [`podman kube play`](https://docs.podman.io/en/latest/markdown/podman-kube-play.1.html).
 
 The RHTPA Ansible collection deploys the following RHTPA components:
@@ -70,7 +70,8 @@ On the controller node export the following environment variables:
       export TPA_PG_ADMIN_PASSWORD=<DB ADMIN PASSWORD>
       export TPA_PG_USER=<DB USER>
       export TPA_PG_USER_PASSWORD=<DB PASSWORD>
-      export TPA_OIDC_ISSUER_URL=<AWS Cognito or Keycloak Issuer URL. Incase of Keycloak endpoint auth/realms/chicken is needed>
+   
+      export TPA_OIDC_ISSUER_URL=<Keycloak Issuer URL or AWS Cognito. Incase of Keycloak endpoint auth/realms/chicken is needed>
       export TPA_OIDC_FRONTEND_ID=<OIDC Frontend Id>
       export TPA_OIDC_PROVIDER_CLIENT_ID=<OIDC Walker Id>
       export TPA_OIDC_PROVIDER_CLIENT_SECRET=<OIDC Walker Secret>
@@ -78,10 +79,21 @@ On the controller node export the following environment variables:
 
 2. Choose between Keycloak or AWS Cognito, and update the `roles/tpa_single_node/defaults/main.yml` file accordingly.
 
-3If you are using AWS Cognito as your OIDC provider, then create an environment variable pointing to the Cognito domain:
+3. If you are using AWS Cognito as your OIDC provider, then create an environment variable pointing to the Cognito domain:
 ```shell
 export TPA_OIDC_COGNITO_DOMAIN=<AWS Cognito Domain>
 ```
+
+4. Storage service
+If the following aren't provided the filesystem is used as a storage
+   ```shell
+     export TPA_STORAGE_ENDPOINT=< S3/minio endpoint>
+     export TPA_STORAGE_ACCESS_KEY=< S3/minio root username>
+     export TPA_STORAGE_SECRET_KEY=< S3/minio root password>
+     export TPA_STORAGE_BUCKET=< S3/minio bucket>
+     export TPA_STORAGE_REGION=<S3/minio region>
+     export TPA_STORAGE_MINIO_ENDPOINT=<Minio endpoint>
+   ```
 
 ## Provision
 
@@ -144,7 +156,7 @@ Support tickets for RedHat Trusted Profile Analyzer can be opened at https://acc
 
 ## Release notes and Roadmap
 
-Release notes can be found [here](https://docs.redhat.com/en/documentation/red_hat_trusted_profile_analyzer/1.2/html/release_notes/index).
+Release notes can be found [here](https://docs.redhat.com/en/documentation/red_hat_trusted_profile_analyzer/2.0/html/release_notes/index).
 
 ## Related Information
 
