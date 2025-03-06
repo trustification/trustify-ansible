@@ -1,4 +1,22 @@
 ---
+- name: Copy create-importers.sql to Server
+  ansible.builtin.copy:
+    content: "{{ lookup('ansible.builtin.template', 'configs/create-importers.sql') }}"
+    dest: "{{ tpa_single_node_config_dir }}/create-importers.sql"
+    remote_src: true
+    mode: "0600"
+
+- name: Run create-importers.sql
+  ansible.builtin.command: "psql postgresql://{{ tpa_single_node_pg_admin }}:{{ tpa_single_node_pg_admin_passwd }}@\
+      {{ tpa_single_node_pg_host }}:{{ tpa_single_node_pg_port }}/{{ tpa_single_node_pg_db }} \
+      -v ON_ERROR_STOP=1 \
+      -v db_name={{ tpa_single_node_pg_db }} \
+      -v db_user={{ tpa_single_node_pg_user }} \
+      -v db_password={{ tpa_single_node_pg_user_passwd }} \
+      -f {{ tpa_single_node_config_dir }}/create-importers.sql"
+  changed_when: false
+  no_log: true
+
 - name: Deploy importer
   ansible.builtin.include_tasks: install_manifest.yml
   vars:
