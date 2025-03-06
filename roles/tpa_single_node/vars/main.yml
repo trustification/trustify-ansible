@@ -17,8 +17,8 @@ tpa_single_node_pg_port: 5432
 tpa_single_node_pg_db: trustify
 
 tpa_single_node_pg_admin: "{{ lookup('env', 'TPA_PG_ADMIN') }}" # postgres
-tpa_single_node_pg_admin_passwd: "{{ lookup('env', 'TPA_PG_ADMIN_PASSWORD') }}" # trustify
-tpa_single_node_pg_user: "{{ lookup('env', 'TPA_PG_USER') }}" # postgres
+tpa_single_node_pg_admin_passwd: "{{ lookup('env', 'TPA_PG_ADMIN_PASSWORD') }}" # postgres
+tpa_single_node_pg_user: "{{ lookup('env', 'TPA_PG_USER') }}" #trustify
 tpa_single_node_pg_user_passwd: "{{ lookup('env', 'TPA_PG_USER_PASSWORD') }}" # trustify
 tpa_single_node_pg_ssl_mode: required
 
@@ -49,7 +49,6 @@ tpa_single_node_trust_server_cert_tls_key_path: "{{ tpa_single_node_certificates
 
 # Target node(s) - Secret and Configmap locations
 tpa_single_node_storage_secret: "{{ tpa_single_node_kube_manifest_dir }}/Secrets/storage.yaml"
-tpa_single_node_event_secret: "{{ tpa_single_node_kube_manifest_dir }}/Secrets/event.yaml"
 tpa_single_node_oidc_secret: "{{ tpa_single_node_kube_manifest_dir }}/Secrets/oidc.yaml"
 tpa_single_node_server_secret: "{{ tpa_single_node_kube_manifest_dir }}/Secrets/server.yaml"
 
