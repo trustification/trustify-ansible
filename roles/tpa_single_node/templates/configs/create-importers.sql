@@ -21,3 +21,11 @@ SET
   revision=EXCLUDED.revision,
   configuration=EXCLUDED.configuration
 ;
+
+INSERT INTO IMPORTER (name, revision, state, last_change, configuration)
+VALUES ('osv-github', gen_random_uuid(), 0, now(), '{"osv":{"description":"GitHub Advisory Database","period":"1d","source":"https://github.com/github/advisory-database"}}'::jsonb)
+ON CONFLICT (name) DO UPDATE
+SET
+  revision=EXCLUDED.revision,
+  configuration=EXCLUDED.configuration
+;
