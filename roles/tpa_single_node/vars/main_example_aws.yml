@@ -38,5 +38,4 @@ tpa_single_node_spog_api_tls_cert_key_path: "{{ tpa_single_node_certificates_dir
 
 # Target node(s) - Secret and Configmap locations
 tpa_single_node_storage_secret: "{{ tpa_single_node_kube_manifest_dir }}/storage-secret.yaml"
-tpa_single_node_event_secret: "{{ tpa_single_node_kube_manifest_dir }}/event-secret.yaml"
 tpa_single_node_oidc_secret: "{{ tpa_single_node_kube_manifest_dir }}/oidc-secret.yaml"

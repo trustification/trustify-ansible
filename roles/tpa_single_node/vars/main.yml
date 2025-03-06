@@ -56,7 +56,6 @@ tpa_single_node_trust_server_cert_tls_key_path: "{{ tpa_single_node_certificates
 
 # Target node(s) - Secret and Configmap locations
 tpa_single_node_storage_secret: "{{ tpa_single_node_kube_manifest_dir }}/Secrets/storage.yaml"
-tpa_single_node_event_secret: "{{ tpa_single_node_kube_manifest_dir }}/Secrets/event.yaml"
 tpa_single_node_oidc_secret: "{{ tpa_single_node_kube_manifest_dir }}/Secrets/oidc.yaml"
 tpa_single_node_server_secret: "{{ tpa_single_node_kube_manifest_dir }}/Secrets/server.yaml"
 
