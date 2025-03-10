@@ -7,7 +7,7 @@
     mode: "0600"
 
 - name: Run create-importers.sql
-  ansible.builtin.command: "psql postgresql://{{ tpa_single_node_pg_admin }}:{{ tpa_single_node_pg_admin_passwd }}@\
+  ansible.builtin.command: "psql postgresql://{{ tpa_single_node_pg_user }}:{{ tpa_single_node_pg_user_passwd }}@\
       {{ tpa_single_node_pg_host }}:{{ tpa_single_node_pg_port }}/{{ tpa_single_node_pg_db }} \
       -v ON_ERROR_STOP=1 \
       -v db_name={{ tpa_single_node_pg_db }} \

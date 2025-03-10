@@ -45,10 +45,10 @@ services:
     ports:
       - "5432:5432"
     environment:
-      POSTGRES_PASSWORD: "trustify"
+      POSTGRES_PASSWORD: "postgres1234"
       POSTGRES_DB: "trustify"
     restart: always
-    shm_size: '1g'
+    shm_size: "4g"
 
   minio:
     image: quay.io/minio/minio:RELEASE.2025-02-28T09-55-16Z
@@ -64,7 +64,7 @@ services:
       MINIO_ROOT_PASSWORD: "password"
     restart: always
     healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:9000/minio/health/live" ]
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
       interval: 30s
       timeout: 20s
       retries: 10
@@ -75,12 +75,12 @@ services:
           - minio
 
   createbuckets:
-      image: quay.io/minio/mc:RELEASE.2025-02-21T16-00-46Z
-      entrypoint:
-        - /bin/sh
-        - -c
-        - |
-          /usr/bin/mc config host add myminio http://minio:9000 admin password;
-          /usr/bin/mc mb myminio/trustify || true;
-          /usr/bin/mc anonymous set public myminio/trustify;
-          /usr/bin/mc admin service restart myminio;
+    image: quay.io/minio/mc:RELEASE.2025-02-21T16-00-46Z
+    entrypoint:
+      - /bin/sh
+      - -c
+      - |
+        /usr/bin/mc config host add myminio http://minio:9000 admin password;
+        /usr/bin/mc mb myminio/trustify || true;
+        /usr/bin/mc anonymous set public myminio/trustify;
+        /usr/bin/mc admin service restart myminio;
