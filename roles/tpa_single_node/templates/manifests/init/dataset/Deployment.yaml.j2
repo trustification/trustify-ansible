@@ -32,7 +32,7 @@ spec:
             - name: TRUSTD_DB_PASSWORD
               value: "{{  tpa_single_node_pg_user_passwd }}"
             - name: TRUSTD_DB_SSLMODE
-              value: allow
+              value: {{ tpa_single_node_pg_ssl_mode }}
           command:
             - trustd
             - db
