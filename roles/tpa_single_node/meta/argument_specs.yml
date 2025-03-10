@@ -65,11 +65,16 @@ argument_specs:
         type: "str"
         version_added: "2.0.0"
         default: "5432"
+      tpa_single_node_pg_instance:
+        description: "DB instance name."
+        type: "str"
+        version_added: "2.0.0"
+        default: "rhtpa"
       tpa_single_node_pg_db:
         description: "DB name."
         type: "str"
         version_added: "2.0.0"
-        default: "guac"
+        default: "trustify"
       tpa_single_node_pg_admin:
         description: "DB admin user."
         type: "str"
