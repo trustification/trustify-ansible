@@ -48,7 +48,7 @@ services:
       POSTGRES_PASSWORD: "postgres1234"
       POSTGRES_DB: "rhtpa"
     restart: always
-    shm_size: "1g"
+    shm_size: "4g"
 
   minio:
     image: quay.io/minio/minio:RELEASE.2025-02-28T09-55-16Z
