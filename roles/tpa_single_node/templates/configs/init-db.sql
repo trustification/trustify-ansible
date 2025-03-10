@@ -31,6 +31,11 @@ GRANT USAGE ON SCHEMA public TO :db_user;
 
 -- grant on existing tables
 GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO :db_user;
+GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA public TO db_user;
+GRANT USAGE ON ALL SEQUENCES IN SCHEMA public TO db_user;
+
+CREATE EXTENSION IF NOT EXISTS pg_trgm WITH SCHEMA public;
+COMMENT ON EXTENSION pg_trgm IS 'text similarity measurement and index searching based on trigrams';
 
 -- grant on future tables
 ALTER DEFAULT PRIVILEGES
