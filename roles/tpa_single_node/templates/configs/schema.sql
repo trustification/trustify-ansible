@@ -4046,3 +4046,5 @@ ALTER TABLE ONLY public.version_range
 -- PostgreSQL database dump complete
 --
 
+ALTER TABLE importer
+ADD COLUMN heartbeat DECIMAL NULL;

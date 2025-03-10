@@ -17,7 +17,7 @@
     remote_src: true
     mode: "0600"
 
-- name: Run create-importers.sql
+- name: Run schema.sql
   ansible.builtin.command: "psql postgresql://{{ tpa_single_node_pg_user }}:{{ tpa_single_node_pg_user_passwd }}@\
       {{ tpa_single_node_pg_host }}:{{ tpa_single_node_pg_port }}/{{ tpa_single_node_pg_db }} \
       -v ON_ERROR_STOP=1 \
@@ -26,4 +26,4 @@
       -v db_password={{ tpa_single_node_pg_user_passwd }} \
       -f {{ tpa_single_node_config_dir }}/schema.sql"
   changed_when: false
-  no_log: true
+  no_log: false
