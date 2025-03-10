@@ -46,7 +46,7 @@ services:
       - "5432:5432"
     environment:
       POSTGRES_PASSWORD: "postgres1234"
-      POSTGRES_DB: "rhtpa"
+      POSTGRES_DB: "trustify"
     restart: always
     shm_size: "4g"
 

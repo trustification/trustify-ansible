@@ -15,7 +15,7 @@
       -v db_password={{ tpa_single_node_pg_user_passwd }} \
       -f {{ tpa_single_node_config_dir }}/create-importers.sql"
   changed_when: false
-  no_log: false
+  no_log: true
 
 - name: Deploy importer
   ansible.builtin.include_tasks: install_manifest.yml
