@@ -30,7 +30,7 @@ services:
       - INIT_DATA=/init-sso/data
       - CHICKEN_ADMIN=admin
       - CHICKEN_ADMIN_PASSWORD=admin123456
-      - REDIRECT_URIS=["http://localhost:*"]
+      - REDIRECT_URIS=["http://192.168.56.0/*","http://192.168.56.0:*"]
       - WALKER_SECRET=ZVzq9AMOVUdMY1lSohpx1jI3aW56QDPS
       # The internal name (between containers) is "keycloak". However, from the host it reachable as "localhost:8090".
       # So the "frontend" needs to be set to that

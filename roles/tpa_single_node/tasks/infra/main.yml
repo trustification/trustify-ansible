@@ -32,5 +32,12 @@
     dest: "{{ tpa_single_node_kube_manifest_dir }}/PVCs/importer.yaml"
     mode: "0600"
 
+- name: Start Importers
+  ansible.builtin.include_tasks: importer/importers.yml
+  when:
+    - tpa_single_node_importer == 'multiple'
+
 - name: Start Importer
   ansible.builtin.include_tasks: importer/importer.yml
+  when:
+    - tpa_single_node_importer == 'single'
