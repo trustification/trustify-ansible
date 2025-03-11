@@ -1,29 +1,11 @@
 ---
-# DISABLED: This task is disabled because it is not needed for the single-node deployment
-# - name: Deploy migrate-db Pod
-#   ansible.builtin.include_tasks: install_manifest.yml
-#   vars:
-#     podman_spec:
-#       state: stopped
-#       systemd_file: migrate-db
-#       network: "{{ tpa_single_node_podman_network }}"
-#       kube_file_content: "{{ lookup('ansible.builtin.template', 'manifests/init/dataset/Deployment.yaml.j2') | from_yaml }}"
-#       # configmaps:
-#       #   - "{{ tpa_single_node_kube_manifest_dir }}/ConfigMaps/custom-trust-anchor.yaml"
-- name: Copy schema.sql to Server
-  ansible.builtin.copy:
-    content: "{{ lookup('ansible.builtin.template', 'configs/schema.sql') }}"
-    dest: "{{ tpa_single_node_config_dir }}/schema.sql"
-    remote_src: true
-    mode: "0600"
-
-- name: Run schema.sql
-  ansible.builtin.command: "psql postgresql://{{ tpa_single_node_pg_user }}:{{ tpa_single_node_pg_user_passwd }}@\
-      {{ tpa_single_node_pg_host }}:{{ tpa_single_node_pg_port }}/{{ tpa_single_node_pg_db }} \
-      -v ON_ERROR_STOP=1 \
-      -v db_name={{ tpa_single_node_pg_db }} \
-      -v db_user={{ tpa_single_node_pg_user }} \
-      -v db_password={{ tpa_single_node_pg_user_passwd }} \
-      -f {{ tpa_single_node_config_dir }}/schema.sql"
-  changed_when: false
-  no_log: false
+- name: Deploy migrate-db Pod
+  ansible.builtin.include_tasks: install_manifest.yml
+  vars:
+    podman_spec:
+      state: stopped
+      systemd_file: migrate-db
+      network: "{{ tpa_single_node_podman_network }}"
+      kube_file_content: "{{ lookup('ansible.builtin.template', 'manifests/init/dataset/Deployment.yaml.j2') | from_yaml }}"
+      # configmaps:
+      #   - "{{ tpa_single_node_kube_manifest_dir }}/ConfigMaps/custom-trust-anchor.yaml"

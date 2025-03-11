@@ -24,19 +24,23 @@ ALTER USER :db_user WITH PASSWORD :'db_password';
 -- grant permission to connect
 GRANT CONNECT ON DATABASE :db_name TO :db_user;
 
+-- TODO: Workaround so rustd migration doesn't fail on extension creation
+-- grant permission to create extension
+GRANT CREATE ON DATABASE :db_name TO :db_user;
+
+-- TODO: Workaround otherwise rustd migration doesn't fail on permissions to public schema
+GRANT CREATE ON SCHEMA public TO :db_user;
+
 -- grant permissions on database
 \connect :db_name
 
 GRANT USAGE ON SCHEMA public TO :db_user;
-GRANT CREATE ON SCHEMA public TO :db_user;
 
 -- grant on existing tables
 GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO :db_user;
-
-CREATE EXTENSION IF NOT EXISTS pg_trgm WITH SCHEMA public;
-COMMENT ON EXTENSION pg_trgm IS 'text similarity measurement and index searching based on trigrams';
 
 -- grant on future tables
 ALTER DEFAULT PRIVILEGES
     IN SCHEMA public
     GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO :db_user;
+

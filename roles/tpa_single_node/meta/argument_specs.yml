@@ -91,10 +91,10 @@ argument_specs:
         required: true
         version_added: "2.0.0"
       tpa_single_node_pg_ssl_mode:
-        description: "DB SSL mode require/disabled."
+        description: "DB SSL mode require/allow."
         type: "str"
         version_added: "2.0.0"
-        default: "disable"
+        default: "require"
       tpa_single_node_oidc_issuer_url:
         description: "Readed from TPA_OIDC_ISSUER_URL env var"
         type: "str"

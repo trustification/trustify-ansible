@@ -9,6 +9,7 @@ tpa_single_node_podman_network: tcnet
 tpa_single_node_systemd_directory: /etc/systemd/system
 
 # UI
+# Generalize > DB_SSLMODE ?
 tpa_single_node_ui_tls: "{{ lookup('env', 'TPA_UI_TLS') | default('true', true) }}"
 
 # DB_SERVICE
@@ -20,7 +21,7 @@ tpa_single_node_pg_admin: "{{ lookup('env', 'TPA_PG_ADMIN') }}"
 tpa_single_node_pg_admin_passwd: "{{ lookup('env', 'TPA_PG_ADMIN_PASSWORD') }}"
 tpa_single_node_pg_user: "{{ lookup('env', 'TPA_PG_USER') }}"
 tpa_single_node_pg_user_passwd: "{{ lookup('env', 'TPA_PG_USER_PASSWORD') }}"
-tpa_single_node_pg_ssl_mode: required
+tpa_single_node_pg_ssl_mode: "{{ lookup('env', 'TPA_PG_SSL_MODE') | default('allow', true) }}"
 
 # SSO_SERVICE
 tpa_single_node_oidc_issuer_url: "{{ lookup('env', 'TPA_OIDC_ISSUER_URL') | default('192.168.124.1:8090', true) }}"

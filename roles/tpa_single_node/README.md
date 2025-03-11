@@ -33,7 +33,7 @@ Deploy the [RHTPA](https://docs.redhat.com/en/documentation/red_hat_trusted_prof
 | tpa_single_node_pg_host | Host ip of the postgresql db instance. Readed from the TPA_PG_HOST env | str |  |
 | tpa_single_node_pg_port | Port of the postgresql db instance. | str |  `5432`  |
 | tpa_single_node_pg_db | DB name. | str |  `trustify`  |
-| tpa_single_node_pg_ssl_mode | DB SSL mode require/disabled. | str |  `disable`  |
+| tpa_single_node_pg_ssl_mode | DB SSL mode require/allow. | str |  `require`  |
 | tpa_single_node_oidc_issuer_url | Readed from TPA_OIDC_ISSUER_URL env var | str |  |
 | tpa_single_node_oidc_frontend_id | Readed from TPA_OIDC_FRONTEND_ID env var | str |  |
 | tpa_single_node_oidc_client_id | Readed from TPA_OIDC_CLIENT_ID env var | str |  |
