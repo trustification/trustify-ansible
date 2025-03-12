@@ -1,23 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: server
+  name: importerA
   namespace: "{{ tpa_single_node_namespace }}"
   labels:
-    app: server
+    app: importerA
     app.kubernetes.io/version: 2.0.0
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app.kubernetes.io/name: server
-      app.kubernetes.io/component: server
+      app.kubernetes.io/name: importerA
+      app.kubernetes.io/component: importerA
       app.kubernetes.io/instance: redhat-trusted-profile-analyzer
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: server
-        app.kubernetes.io/component: server
+        app.kubernetes.io/name: importerA
+        app.kubernetes.io/component: importerA
         app.kubernetes.io/instance: redhat-trusted-profile-analyzer
     spec:
       containers:
@@ -43,9 +43,9 @@ spec:
           command:
             - /usr/local/bin/trustd
           args:
-            - api
-            - --auth-configuration
-            - /etc/config/auth.yaml
+            - importer
+            - --working-dir
+            - /data/workdir
           env:
             - name: NAMESPACE
               value: "{{ tpa_single_node_namespace }}"
@@ -55,39 +55,30 @@ spec:
               value: 'true'
             - name: INFRASTRUCTURE_BIND
               value: '[::]:9010'
-            - name: HTTP_SERVER_BIND_ADDR
-              value: '::'
-{% if tpa_single_node_ui_tls == 'true' %}
-            - name: HTTP_SERVER_TLS_ENABLED
-              value: 'true'
-            - name: HTTP_SERVER_TLS_KEY_FILE
-              value: /etc/tls/tls.key
-            - name: HTTP_SERVER_TLS_CERTIFICATE_FILE
-              value: /etc/tls/tls.crt
-{% else %}
-            - name: HTTP_SERVER_TLS_ENABLED
-              value: 'false'
-{% endif %}
-{% if tpa_single_node_server_req_limit != 'None' %}
-            - name: HTTP_SERVER_REQUEST_LIMIT
-              value: "{{ tpa_single_node_server_req_limit }}"
-{% endif %}
-{% if tpa_single_node_server_json_limit != 'None' %}
-            - name: HTTP_SERVER_JSON_LIMIT
-              value: "{{ tpa_single_node_server_json_limit }}"
-{% endif %}
             - name: TRUSTD_DB_HOST
               value: "{{ tpa_single_node_pg_host }}"
             - name: TRUSTD_DB_PORT
-              value: "{{ tpa_single_node_pg_port }}"
+              value:  "{{ tpa_single_node_pg_port }}"
             - name: TRUSTD_DB_NAME
               value: "{{ tpa_single_node_pg_db }}"
             - name: TRUSTD_DB_USER
               value: "{{ tpa_single_node_pg_user }}"
             - name: TRUSTD_DB_PASSWORD
-              value: "{{ tpa_single_node_pg_user_passwd }}"
+              value: "{{  tpa_single_node_pg_user_passwd }}"
             - name: TRUSTD_DB_SSLMODE
-              value: {{ tpa_single_node_pg_ssl_mode }}
+              value: "{{ tpa_single_node_pg_ssl_mode }}"
+            - name: TRUSTD_DB_MAX_CONN
+              value: "{{ tpa_single_node_pg_max_conn }}"
+            - name: TRUSTD_DB_MIN_CONN
+              value: "{{ tpa_single_node_pg_min_conn }}"
+            - name: TRUSTD_DB_CONNECT_TIMEOUT
+              value: "{{ tpa_single_node_pg_conn_timeout }}"
+            - name: TRUSTD_DB_ACQUIRE_TIMEOUT
+              value: "{{ tpa_single_node_pg_acquire_timeout }}"
+            - name: TRUSTD_DB_MAX_LIFETIME
+              value: "{{ tpa_single_node_pg_max_lifetime }}"
+            - name: TRUSTD_DB_IDLE_TIMEOUT
+              value: "{{ tpa_single_node_pg_idle_timeout }}"
 {% if tpa_single_node_storage_compression != 'None' %}
             - name: TRUSTD_STORAGE_COMPRESSION
               value: {{ tpa_single_node_storage_compression }}
@@ -119,52 +110,11 @@ spec:
               value: "{{ tpa_single_node_storage_minio_endpoint }}"
 {% endif %}
 {% endif %}
-            - name: SWAGGER_UI_OIDC_ISSUER_URL
-              value: "{{ tpa_single_node_oidc_issuer_url }}"
-            - name: SWAGGER_UI_OIDC_CLIENT_ID
-              valueFrom:
-                secretKeyRef:
-                  name: oidc_secret
-                  key: front_end
-            - name: UI_ISSUER_URL
-              value: "{{ tpa_single_node_oidc_issuer_url }}"
-            - name: UI_CLIENT_ID
-              valueFrom:
-                secretKeyRef:
-                  name: oidc_secret
-                  key: front_end
-{% if tpa_single_node_upload_limit != 'None' %}
-            - name: TRUSTD_SBOM_UPLOAD_LIMIT
-              value: "{{ tpa_single_node_upload_limit }}"
-            - name: TRUSTD_ADVISORY_UPLOAD_LIMIT
-              value: "{{ tpa_single_node_upload_limit }}"
-            - name: TRUSTD_DATASET_ENTRY_LIMIT
-              value: "{{ tpa_single_node_upload_limit }}"
-{% endif %}
           ports:
             - containerPort: 9010
               protocol: TCP
               name: infra
-              hostPort: 9010
-            - containerPort: 8080
-              name: endpoint
-              protocol: TCP
-              hostIP: {{ tpa_single_node_rhel_host }}
-{% if tpa_single_node_ui_tls == 'true' %}
-              hostPort: 443
-{% else %}
-              hostPort: 80
-{% endif %}
-
           volumeMounts:
-            - mountPath: /etc/tls
-              name: tls
-              readOnly: true
-            - name: config-auth
-              mountPath: /etc/config/auth.yaml
-              subPath: auth.yaml
-            - name: oidc-secret
-              mountPath: /etc/oidcsecret
 {% if tpa_single_node_storage_region == 'None' %}
             - name: storage
               mountPath: /data/storage
@@ -172,16 +122,9 @@ spec:
             - name: storage-secret
               mountPath: /etc/storagesecret
 {% endif %}
+            - name: workdir
+              mountPath: /data/workdir
       volumes:
-        - name: tls
-          secret:
-            secretName: tls_cert
-        - name: config-auth
-          configMap:
-            name: server-api-auth
-        - name: oidc-secret
-          secret:
-            secretName: oidc_secret
 {% if tpa_single_node_storage_region == 'None' %}
         - name: storage
           persistentVolumeClaim:
@@ -191,3 +134,6 @@ spec:
           secret:
             secretName: storage_secret
 {% endif %}
+        - name: workdir
+          persistentVolumeClaim:
+            claimName: workdir

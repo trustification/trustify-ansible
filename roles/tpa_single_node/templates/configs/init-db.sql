@@ -24,13 +24,6 @@ ALTER USER :db_user WITH PASSWORD :'db_password';
 -- grant permission to connect
 GRANT CONNECT ON DATABASE :db_name TO :db_user;
 
--- TODO: Workaround so rustd migration doesn't fail on extension creation
--- grant permission to create extension
-GRANT CREATE ON DATABASE :db_name TO :db_user;
-
--- TODO: Workaround otherwise rustd migration doesn't fail on permissions to public schema
-GRANT CREATE ON SCHEMA public TO :db_user;
-
 -- grant permissions on database
 \connect :db_name
 

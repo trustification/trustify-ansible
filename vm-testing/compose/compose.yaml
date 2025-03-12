@@ -30,7 +30,7 @@ services:
       - INIT_DATA=/init-sso/data
       - CHICKEN_ADMIN=admin
       - CHICKEN_ADMIN_PASSWORD=admin123456
-      - REDIRECT_URIS=["http://localhost:*"]
+      - REDIRECT_URIS=["http://192.168.56.0/*","http://192.168.56.0:*"]
       - WALKER_SECRET=ZVzq9AMOVUdMY1lSohpx1jI3aW56QDPS
       # The internal name (between containers) is "keycloak". However, from the host it reachable as "localhost:8090".
       # So the "frontend" needs to be set to that
@@ -44,9 +44,11 @@ services:
     image: docker.io/library/postgres:17
     ports:
       - "5432:5432"
+    command: -c 'max_connections=400'
     environment:
       POSTGRES_PASSWORD: "postgres1234"
       POSTGRES_DB: "trustify"
+      POSTGRES_MAX_CONNECTIONS: 200
     restart: always
     shm_size: "4g"
 

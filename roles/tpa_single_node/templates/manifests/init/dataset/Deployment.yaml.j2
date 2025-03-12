@@ -28,9 +28,9 @@ spec:
             - name: TRUSTD_DB_NAME
               value: "{{ tpa_single_node_pg_db }}"
             - name: TRUSTD_DB_USER
-              value: "{{ tpa_single_node_pg_user }}"
+              value: "{{ tpa_single_node_pg_admin }}"
             - name: TRUSTD_DB_PASSWORD
-              value: "{{  tpa_single_node_pg_user_passwd }}"
+              value: "{{  tpa_single_node_pg_admin_passwd }}"
             - name: TRUSTD_DB_SSLMODE
               value: {{ tpa_single_node_pg_ssl_mode }}
           command:
