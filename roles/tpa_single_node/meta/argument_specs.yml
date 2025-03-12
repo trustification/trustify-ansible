@@ -173,5 +173,41 @@ argument_specs:
       tpa_single_node_probe_initial_delay_seconds:
         description: "Initial prob delay in seconds"
         type: "int"
-        version_added: "1.2.1"
+        version_added: "2.0.0"
         default: 30
+      tpa_single_node_cpu:
+        description: "CPU for deployment"
+        type: "int"
+        version_added: "2.0.0"
+        default: 1
+      tpa_single_node_memory:
+        description: "Memory for deployment"
+        type: "str"
+        version_added: "2.0.0"
+        default: 8Gi
+      tpa_single_node_server_pvc_claim:
+        description: "Server PVC Claim"
+        type: "str"
+        version_added: "2.0.0"
+        default: 32Gi
+      tpa_single_node_log_filter:
+        description: "Rust Log filter"
+        type: "str"
+        version_added: "2.0.0"
+        default: "info"
+      tpa_single_node_server_req_limit:
+        description: "HTTP Server Request limit"
+        type: "str"
+        version_added: "2.0.0"
+      tpa_single_node_server_json_limit:
+        description: "HTTP Server JSON limit"
+        type: "str"
+        version_added: "2.0.0"
+      tpa_single_node_upload_limit:
+        description: "Upload limit for Files"
+        type: "str"
+        version_added: "2.0.0"
+      tpa_single_node_storage_compression:
+        description: "Compression logic for storage "
+        type: "str"
+        version_added: "2.0.0"

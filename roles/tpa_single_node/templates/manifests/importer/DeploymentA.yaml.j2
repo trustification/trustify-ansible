@@ -24,16 +24,22 @@ spec:
         - name: service
           image: "{{ tpa_single_node_trustification_image }}"
           imagePullPolicy: IfNotPresent
+          resources:
+            requests:
+              cpu: "{{ tpa_single_node_cpu }}"
+              memory: "{{ tpa_single_node_memory }}"
           livenessProbe:
-            initialDelaySeconds: 2
-            httpGet:
-              path: /health/live
-              port: 9010
+            exec:
+              command:
+                - sh
+                - -c
+                - "echo > /dev/tcp/localhost/9010"
           readinessProbe:
-            initialDelaySeconds: 2
-            httpGet:
-              path: /health/ready
-              port: 9010
+            exec:
+              command:
+                - sh
+                - -c
+                - "echo > /dev/tcp/localhost/9010"
           command:
             - /usr/local/bin/trustd
           args:
@@ -44,7 +50,7 @@ spec:
             - name: NAMESPACE
               value: "{{ tpa_single_node_namespace }}"
             - name: RUST_LOG
-              value: info
+              value: "{{ tpa_single_node_log_filter }}"
             - name: INFRASTRUCTURE_ENABLED
               value: 'true'
             - name: INFRASTRUCTURE_BIND
@@ -73,6 +79,10 @@ spec:
               value: "{{ tpa_single_node_pg_max_lifetime }}"
             - name: TRUSTD_DB_IDLE_TIMEOUT
               value: "{{ tpa_single_node_pg_idle_timeout }}"
+{% if tpa_single_node_storage_compression != 'None' %}
+            - name: TRUSTD_STORAGE_COMPRESSION
+              value: {{ tpa_single_node_storage_compression }}
+{% endif %}
 {% if tpa_single_node_storage_region == 'None' %}
             - name: TRUSTD_STORAGE_STRATEGY
               value: fs
@@ -95,20 +105,35 @@ spec:
               value: "{{ tpa_single_node_storage_bucket }}"
             - name: TRUSTD_S3_REGION
               value: "{{ tpa_single_node_storage_region }}"
+{% if tpa_single_node_storage_minio_endpoint != "None" %}
+            - name: TRUSTD_S3_ENDPOINT
+              value: "{{ tpa_single_node_storage_minio_endpoint }}"
+{% endif %}
 {% endif %}
           ports:
             - containerPort: 9010
               protocol: TCP
               name: infra
           volumeMounts:
+{% if tpa_single_node_storage_region == 'None' %}
             - name: storage
               mountPath: /data/storage
+{% else %}
+            - name: storage-secret
+              mountPath: /etc/storagesecret
+{% endif %}
             - name: workdir
               mountPath: /data/workdir
       volumes:
-          - name: storage
-            persistentVolumeClaim:
-              claimName: storage
-          - name: workdir
-            persistentVolumeClaim:
-              claimName: workdir
+{% if tpa_single_node_storage_region == 'None' %}
+        - name: storage
+          persistentVolumeClaim:
+            claimName: storage
+{% else %}
+        - name: storage-secret
+          secret:
+            secretName: storage_secret
+{% endif %}
+        - name: workdir
+          persistentVolumeClaim:
+            claimName: workdir

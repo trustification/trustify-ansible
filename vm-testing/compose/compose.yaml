@@ -48,6 +48,7 @@ services:
     environment:
       POSTGRES_PASSWORD: "postgres1234"
       POSTGRES_DB: "trustify"
+      POSTGRES_MAX_CONNECTIONS: 200
     restart: always
     shm_size: "4g"
 

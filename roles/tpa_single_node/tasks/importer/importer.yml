@@ -12,7 +12,7 @@
       -v ON_ERROR_STOP=1 \
       -f {{ tpa_single_node_config_dir }}/create-importers.sql"
   changed_when: false
-  no_log: false
+  no_log: true
   register: result
   retries: 2
   delay: 5

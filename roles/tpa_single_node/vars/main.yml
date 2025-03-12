@@ -62,8 +62,25 @@ tpa_single_node_server_secret: "{{ tpa_single_node_kube_manifest_dir }}/Secrets/
 
 # Probes
 tpa_single_node_probe_initial_delay_seconds: 30
+
 # Importers
 tpa_single_node_importer: single # single/multiple
+
+# Storage Compression
+tpa_single_node_storage_compression: None # zstd
+
+# Resources
+tpa_single_node_cpu: 1
+tpa_single_node_memory: 8Gi
+tpa_single_node_server_pvc_claim: 32Gi
+
+# Limits
+tpa_single_node_server_req_limit: "{{ lookup('env', 'TPA_SERVER_REQ_LIMIT') | default('None', true) }}"
+tpa_single_node_server_json_limit: "{{ lookup('env', 'TPA_SERVER_JSON_LIMIT') | default('None', true) }}"
+tpa_single_node_upload_limit: "{{ lookup('env', 'TPA_SERVER_UPLOAD_LIMIT') | default('None', true) }}"
+
+# Log Level
+tpa_single_node_log_filter: info
 
 # defaults file for tpa_single_node
 tpa_single_node_system_packages:
