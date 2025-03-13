@@ -17,7 +17,6 @@ tpa_single_node_pg_host: "{{ lookup('env', 'TPA_PG_HOST') | default('192.168.124
 tpa_single_node_pg_port: 5432
 tpa_single_node_pg_db: "{{ lookup('env', 'TPA_PG_DB') }}"
 
-<<<<<<< HEAD
 tpa_single_node_pg_admin: "{{ lookup('env', 'TPA_PG_ADMIN') }}"
 tpa_single_node_pg_admin_passwd: "{{ lookup('env', 'TPA_PG_ADMIN_PASSWORD') }}"
 tpa_single_node_pg_user: "{{ lookup('env', 'TPA_PG_USER') }}"
@@ -29,13 +28,6 @@ tpa_single_node_pg_conn_timeout: 20
 tpa_single_node_pg_acquire_timeout: 120
 tpa_single_node_pg_max_lifetime: 30
 tpa_single_node_pg_idle_timeout: 15
-=======
-tpa_single_node_pg_admin: "{{ lookup('env', 'TPA_PG_ADMIN') }}" # postgres
-tpa_single_node_pg_admin_passwd: "{{ lookup('env', 'TPA_PG_ADMIN_PASSWORD') }}" # postgres
-tpa_single_node_pg_user: "{{ lookup('env', 'TPA_PG_USER') }}" #trustify
-tpa_single_node_pg_user_passwd: "{{ lookup('env', 'TPA_PG_USER_PASSWORD') }}" # trustify
-tpa_single_node_pg_ssl_mode: required
->>>>>>> 95c6a88 (Updat ereame and arguments)
 
 # SSO_SERVICE
 tpa_single_node_oidc_issuer_url: "{{ lookup('env', 'TPA_OIDC_ISSUER_URL') | default('192.168.124.1:8090', true) }}"
