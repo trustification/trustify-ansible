@@ -1,6 +1,6 @@
 argument_specs:
   main:
-    short_description: "Configure Red Hat Trusted Profile Analyzer Signer (RHTPA) on a single managed node."
+    short_description: "Configure Red Hat Trusted Profile Analyzer (RHTPA 2) on a single managed node."
     description: >
       Deploy the [RHTPA](https://docs.redhat.com/en/documentation/red_hat_trusted_profile_analyzer/) service
       on a single managed node by using the `tpa_single_node` role.
@@ -10,7 +10,7 @@ argument_specs:
         description: "Trustification image."
         type: "str"
         version_added: "2.0.0"
-        default: "registry.redhat.io/rhtpa/rhtpa-trustification-service-rhel9:0bef82c8139cc89ef4840e36ad519ca24bb54f70"
+        default: "registry.redhat.io/rhtpa/rhtpa-trustification-service-rhel9:764b0bf413261903e3521c173fedc07f1d44c36b"
       tpa_single_node_base_hostname:
         description: "The user name logging in to the registry to pull images."
         type: "str"
@@ -50,11 +50,6 @@ argument_specs:
         type: "str"
         version_added: "2.0.0"
         default: "/etc/systemd/system"
-      tpa_single_node_default_empty:
-        description: "Default empty value."
-        type: "str"
-        version_added: "2.0.0"
-        default: ""
       tpa_single_node_pg_host:
         description: "Host ip of the postgresql db instance. Readed from the TPA_PG_HOST env"
         type: "str"
@@ -161,15 +156,20 @@ argument_specs:
         required: true
         version_added: "2.0.0"
       tpa_single_node_storage_secret:
-        description: "storage-secret.yaml path on the target machine"
+        description: "storage.yaml path on the target machine"
         type: "str"
         version_added: "2.0.0"
         default: "/etc/rhtpa/manifests/storage-secret.yaml"
       tpa_single_node_oidc_secret:
-        description: "oidc-secret.yaml path on the target machine"
+        description: "oidc.yaml path on the target machine"
         type: "str"
         version_added: "2.0.0"
-        default: "/etc/rhtpa/manifests/oidc-secret.yaml"
+        default: "/etc/rhtpa/manifests/Secrets/oidc.yaml"
+      tpa_single_node_oidc_server_secret:
+        description: "secret.yaml path on the target machine"
+        type: "str"
+        version_added: "2.0.0"
+        default: "/etc/rhtpa/manifests/Secrets/server.yaml"
       tpa_single_node_probe_initial_delay_seconds:
         description: "Initial prob delay in seconds"
         type: "int"
