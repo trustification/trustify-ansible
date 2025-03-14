@@ -97,30 +97,35 @@ For development purposes, TLS certificates can be generated using the script loc
 
 Steps to Generate TLS Certificates:
 
- 1. **Update IP Address**: If you are generating TLS certificates for virtual machines other than Vagrant, ensure to update the IP address within ./bin/gencerts.sh accordingly.
+1.  **Update IP Address**: If you are generating TLS certificates for virtual machines other than Vagrant, ensure to update the IP address within ./bin/gencerts.sh accordingly.
 
- 2. **Run the Script**: Execute the script from the parent directory with the following command:
+2.  **Run the Script**: Execute the script from the parent directory with the following command:
+
 ```
 sh ./bin/gencerts.sh
 ```
- 3. **Certificates to Client Machine**: After the certificate files are generated, you need to copy rootCA.crt to the client machine from which the application will be accessed. This step is crucial for establishing a trusted connection. This is needed for,
-     - *Trust Establishment*: The client recognizes and trusts the server's TLS certificate, allowing for secure communication without warnings or errors about untrusted certificates.
-     - *Secure Communication*: By adding rootCA.crt to the trusted certificate store, you mitigate potential man-in-the-middle attacks and ensure data integrity during transmission
+
+3.  **Certificates to Client Machine**: After the certificate files are generated, you need to copy rootCA-cert.pem to the client machine from which the application will be accessed. This step is crucial for establishing a trusted connection. This is needed for,
+    - _Trust Establishment_: The client recognizes and trusts the server's TLS certificate, allowing for secure communication without warnings or errors about untrusted certificates.
+    - _Secure Communication_: By adding rootCA-cert.pem to the trusted certificate store, you mitigate potential man-in-the-middle attacks and ensure data integrity during transmission
 
 For Linux Systems:
-To install the `rootCA.crt`, execute the following commands:
+To install the `rootCA-cert.pem`, execute the following commands:
+
 ```
-sudo cp rootCA.crt /etc/pki/ca-trust/source/anchors/
+sudo cp rootCA-cert.pem /etc/pki/ca-trust/source/anchors/
 sudo update-ca-trust
 ```
+
 This will update the system's certificate store, enabling your applications to recognize the newly trusted root certificate
 
-
 ## Faq
+
 Error at the vagrant startup
+
 ```
 Name `rhel9-vm_trustification` of domain about to create is already taken. Please try to run
 `vagrant up` command again.
 ```
 
-Open the Virtual machine manager, or install if is not on the machine, and delete the image then run again ```vagrant up```
+Open the Virtual machine manager, or install if is not on the machine, and delete the image then run again `vagrant up`

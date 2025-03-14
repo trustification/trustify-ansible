@@ -1,6 +1,7 @@
 #!/bin/bash
 TRUST_ANCHOR='rootCA'
-CERTS=('trust-cert')
+CERTS=('server')
+CSR_CONFIG='server.cnf'
 CERT_DIR='./certs'
 
 mkdir -p "$CERT_DIR"
@@ -25,7 +26,7 @@ basicConstraints = CA:TRUE
 keyUsage = digitalSignature, keyCertSign
 EOF
 
-cat > ${CERT_DIR}/server.cnf <<EOF
+cat > ${CERT_DIR}/${CSR_CONFIG} <<EOF
 [ req ]
 default_bits       = 2048
 prompt             = no
@@ -49,21 +50,21 @@ EOF
 
 
 # Root Cert - Trust Anchor
-openssl genpkey -algorithm RSA -out "${CERT_DIR}/${TRUST_ANCHOR}.key" -pkeyopt rsa_keygen_bits:2048
-openssl req -x509 -new -nodes -key "${CERT_DIR}/${TRUST_ANCHOR}.key" -sha256 -days 3650 -out "${CERT_DIR}/${TRUST_ANCHOR}.crt" -config ${CERT_DIR}/rootCA.cnf
+openssl genpkey -algorithm RSA -out "${CERT_DIR}/${TRUST_ANCHOR}-key.pem" -pkeyopt rsa_keygen_bits:2048
+openssl req -x509 -new -nodes -key "${CERT_DIR}/${TRUST_ANCHOR}-key.pem" -sha256 -days 3650 -out "${CERT_DIR}/${TRUST_ANCHOR}-cert.pem" -config ${CERT_DIR}/rootCA.cnf
 
 for certname in "${CERTS[@]}"; do
-    rm -f "${CERT_DIR}/${certname}.key" "${CERT_DIR}/${certname}.crt"
+    rm -f "${CERT_DIR}/${certname}-key.pem" "${CERT_DIR}/${certname}-cert.pem"
 
     # Create the private key    
-    openssl genpkey -algorithm RSA -out "${CERT_DIR}/${certname}.key" -pkeyopt rsa_keygen_bits:2048
+    openssl genpkey -algorithm RSA -out "${CERT_DIR}/${certname}-key.pem" -pkeyopt rsa_keygen_bits:2048
 
     # Create the CSR
-    openssl req -new -key "${CERT_DIR}/${certname}.key" -out "${CERT_DIR}/${certname}.csr" -config ${CERT_DIR}/server.cnf
+    openssl req -new -key "${CERT_DIR}/${certname}-key.pem" -out "${CERT_DIR}/${certname}.csr" -config ${CERT_DIR}/${CSR_CONFIG}
 
     # # Sign the CSR with the CA
-    openssl x509 -req -in "${CERT_DIR}/${certname}.csr" -CA "${CERT_DIR}/${TRUST_ANCHOR}.crt" -CAkey "${CERT_DIR}/${TRUST_ANCHOR}.key" -CAcreateserial \
-    -out "${CERT_DIR}/${certname}.crt" -days 365 -extfile ${CERT_DIR}/server.cnf -extensions req_ext
+    openssl x509 -req -in "${CERT_DIR}/${certname}.csr" -CA "${CERT_DIR}/${TRUST_ANCHOR}-cert.pem" -CAkey "${CERT_DIR}/${TRUST_ANCHOR}-key.pem" -CAcreateserial \
+    -out "${CERT_DIR}/${certname}-cert.pem" -days 365 -extfile ${CERT_DIR}/${CSR_CONFIG} -extensions req_ext
 
     # Remove the CSR file
     rm "${CERT_DIR}/${certname}.csr"

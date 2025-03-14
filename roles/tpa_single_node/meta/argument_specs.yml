@@ -115,6 +115,11 @@ argument_specs:
         type: "str"
         required: false
         version_added: "2.0.0"
+      tpa_single_node_oidc_tls_insecure:
+        description: "Readed from TPA_OIDC_TLS_INSECURE env var"
+        type: "str"
+        required: false
+        version_added: "2.0.0"
       tpa_single_node_aws_cognito_domain:
         description: "Readed from TPA_OIDC_COGNITO_DOMAIN env var"
         type: "str"
@@ -145,17 +150,17 @@ argument_specs:
         type: "str"
         required: false
         version_added: "2.0.0"
-      tpa_single_node_root_ca:
+      tpa_single_node_tls_trust_anchor_cert:
         description: "rootCA path on the controller machine"
         type: "str"
         required: true
         version_added: "2.0.0"
-      tpa_single_node_trust_cert_tls_crt_path:
+      tpa_single_node_tls_server_cert:
         description: "pem path on the controller machine"
         type: "str"
         required: true
         version_added: "2.0.0"
-      tpa_single_node_trust_cert_tls_key_path:
+      tpa_single_node_tls_server_key:
         description: "key path on the controller machine"
         type: "str"
         required: true

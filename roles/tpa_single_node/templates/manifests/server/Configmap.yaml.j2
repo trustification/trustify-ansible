@@ -17,6 +17,12 @@ data:
 
           - clientId: {{ tpa_single_node_oidc_frontend_id }}
             issuerUrl: {{ tpa_single_node_oidc_issuer_url }}
+{%- if tpa_single_node_tls_trust_anchor_cert is defined %}
+
+            tlsCaCertificates:
+              - "/etc/trust-anchor/tls.crt"
+
+{%- endif %}
 
             additionalPermissions:
               - "ai"
@@ -89,6 +95,12 @@ data:
               "read:document": [ "ai", "read.advisory", "read.importer", "read.metadata", "read.sbom", "read.weakness" ]
               "update:document": [ "update.advisory", "update.importer", "update.metadata", "update.sbom", "update.weakness" ]
               "delete:document": [ "delete.advisory", "delete.importer", "delete.metadata", "delete.sbom", "delete.vulnerability", "delete.weakness" ]
+{%- if tpa_single_node_tls_trust_anchor_cert is defined %}
+
+            tlsCaCertificates:
+              - "/etc/trust-anchor/tls.crt"
+
+{%- endif %}
 
           - clientId: cli
             issuerUrl: {{ tpa_single_node_oidc_issuer_url }}

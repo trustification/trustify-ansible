@@ -1,5 +1,5 @@
 Copy your certificate files here
 
-- trust-cert.crt
-- trust-cert.key
-- rootCA.crt
+- server-cert.pem
+- server-key.pem
+- rootCA-cert.pem
