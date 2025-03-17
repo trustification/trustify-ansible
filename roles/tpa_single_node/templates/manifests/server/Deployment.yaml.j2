@@ -130,10 +130,8 @@ spec:
             - name: SWAGGER_UI_OIDC_TLS_INSECURE
               value: "true"
 {% endif %}
-{% if tpa_single_node_tls_trust_anchor_cert is defined %}
             - name: SWAGGER_UI_OIDC_TLS_CA_CERTIFICATES
               value: "/etc/trust-anchor/tls.crt"
-{% endif %}
             - name: UI_ISSUER_URL
               value: "{{ tpa_single_node_oidc_issuer_url }}"
             - name: UI_CLIENT_ID
