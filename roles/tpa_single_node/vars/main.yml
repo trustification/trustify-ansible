@@ -24,10 +24,10 @@ tpa_single_node_pg_user_passwd: "{{ lookup('env', 'TPA_PG_USER_PASSWORD') }}"
 tpa_single_node_pg_ssl_mode: "{{ lookup('env', 'TPA_PG_SSL_MODE') | default('allow', true) }}"
 tpa_single_node_pg_max_conn: 75
 tpa_single_node_pg_min_conn: 25
-tpa_single_node_pg_conn_timeout: 20
-tpa_single_node_pg_acquire_timeout: 120
-tpa_single_node_pg_max_lifetime: 30
-tpa_single_node_pg_idle_timeout: 15
+tpa_single_node_pg_conn_timeout: 8
+tpa_single_node_pg_acquire_timeout: 8
+tpa_single_node_pg_max_lifetime: 7200
+tpa_single_node_pg_idle_timeout: 600
 
 # SSO_SERVICE
 tpa_single_node_oidc_issuer_url: "{{ lookup('env', 'TPA_OIDC_ISSUER_URL') | default('192.168.124.1:8090', true) }}"
