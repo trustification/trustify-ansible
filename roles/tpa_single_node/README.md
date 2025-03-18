@@ -13,9 +13,9 @@ Deploy the [RHTPA](https://docs.redhat.com/en/documentation/red_hat_trusted_prof
 | tpa_single_node_pg_admin_passwd | DB admin password. | str |  |
 | tpa_single_node_pg_user | DB user. | str |  |
 | tpa_single_node_pg_user_passwd | DB user password. | str |  |
-| tpa_single_node_root_ca | rootCA path on the controller machine | str |  |
-| tpa_single_node_trust_cert_tls_crt_path | pem path on the controller machine | str |  |
-| tpa_single_node_trust_cert_tls_key_path | key path on the controller machine | str |  |
+| tpa_single_node_tls_trust_anchor_cert | rootCA path on the controller machine | str |  |
+| tpa_single_node_tls_server_cert | pem path on the controller machine | str |  |
+| tpa_single_node_tls_server_key | key path on the controller machine | str |  |
 
 ### Optional
 |Option|Description|Type|Default|
@@ -38,6 +38,7 @@ Deploy the [RHTPA](https://docs.redhat.com/en/documentation/red_hat_trusted_prof
 | tpa_single_node_oidc_frontend_id | Readed from TPA_OIDC_FRONTEND_ID env var | str |  |
 | tpa_single_node_oidc_client_id | Readed from TPA_OIDC_CLIENT_ID env var | str |  |
 | tpa_single_node_oidc_client_secret | Readed from TPA_OIDC_CLIENT_SECRET env var | str |  |
+| tpa_single_node_oidc_tls_insecure | Readed from TPA_OIDC_TLS_INSECURE env var | str |  |
 | tpa_single_node_aws_cognito_domain | Readed from TPA_OIDC_COGNITO_DOMAIN env var | str |  |
 | tpa_single_node_storage_access_key | Read from 'TPA_STORAGE_ACCESS_KEY' env var | str |  |
 | tpa_single_node_storage_secret_key | Read from 'TPA_STORAGE_SECRET_KEY' env var | str |  |
@@ -47,6 +48,14 @@ Deploy the [RHTPA](https://docs.redhat.com/en/documentation/red_hat_trusted_prof
 | tpa_single_node_storage_secret | storage-secret.yaml path on the target machine | str |  `/etc/rhtpa/manifests/storage-secret.yaml`  |
 | tpa_single_node_oidc_secret | oidc-secret.yaml path on the target machine | str |  `/etc/rhtpa/manifests/oidc-secret.yaml`  |
 | tpa_single_node_probe_initial_delay_seconds | Initial prob delay in seconds | int |  `30`  |
+| tpa_single_node_cpu | CPU for deployment | int |  `1`  |
+| tpa_single_node_memory | Memory for deployment | str |  `8Gi`  |
+| tpa_single_node_server_pvc_claim | Server PVC Claim | str |  `32Gi`  |
+| tpa_single_node_log_filter | Rust Log filter | str |  `info`  |
+| tpa_single_node_server_req_limit | HTTP Server Request limit | str |  |
+| tpa_single_node_server_json_limit | HTTP Server JSON limit | str |  |
+| tpa_single_node_upload_limit | Upload limit for Files | str |  |
+| tpa_single_node_storage_compression | Compression logic for storage | str |  |
 
 ## Example Playbook
 
@@ -57,9 +66,9 @@ Deploy the [RHTPA](https://docs.redhat.com/en/documentation/red_hat_trusted_prof
     tpa_single_node_pg_admin_passwd: # TODO: required, type: str
     tpa_single_node_pg_user: # TODO: required, type: str
     tpa_single_node_pg_user_passwd: # TODO: required, type: str
-    tpa_single_node_root_ca: # TODO: required, type: str
-    tpa_single_node_trust_cert_tls_crt_path: # TODO: required, type: str
-    tpa_single_node_trust_cert_tls_key_path: # TODO: required, type: str
+    tpa_single_node_tls_trust_anchor_cert: # TODO: required, type: str
+    tpa_single_node_tls_server_cert: # TODO: required, type: str
+    tpa_single_node_tls_server_key: # TODO: required, type: str
     
   tasks:
     - name: Include TPA single node role

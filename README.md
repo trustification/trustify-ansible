@@ -1,13 +1,12 @@
 # Red Hat Trusted Profile Analyzer Ansible collection
 
-The purpose of this Ansible collection is to automate the deployment of the Red Hat Trusted Profile Analyzer (RHTPA) service on Red Hat Enterprise Linux (RHEL).
+The purpose of this Ansible collection is to automate the deployment of the Red Hat Trusted Profile Analyzer (RHTPA 2.x) service on Red Hat Enterprise Linux (RHEL).
 
 > [!IMPORTANT]
-Deploying RHTPA by using Ansible is a Technology Preview feature only.
-Technology Preview features are not supported with Red Hat production service level agreements (SLAs), might not be functionally complete, and Red Hat does not recommend to use them for production.
-These features provide early access to upcoming product features, enabling customers to test functionality and provide feedback during the development process.
-See the support scope for [Red Hat Technology Preview](https://access.redhat.com/support/offerings/techpreview/) features for more details.
-
+> Deploying RHTPA 2.x by using Ansible is a Technology Preview feature only.
+> Technology Preview features are not supported with Red Hat production service level agreements (SLAs), might not be functionally complete, and Red Hat does not recommend to use them for production.
+> These features provide early access to upcoming product features, enabling customers to test functionality and provide feedback during the development process.
+> See the support scope for [Red Hat Technology Preview](https://access.redhat.com/support/offerings/techpreview/) features for more details.
 
 ## Description
 
@@ -25,34 +24,35 @@ A RHEL 9.3+ server should be used to run the Trustify components.
 Install and configure Ansible on a control node before performing the automated deployment.
 
 ## Minimum hardware requirements
-* 24 vCPU,
-* 48 GB Ram,
-* 100 GB Disk space
+
+- 24 vCPU,
+- 48 GB Ram,
+- 100 GB Disk space
 
 ## Requirements
 
-* Ansible 2.16.0 or greater
-* Python 3.10.0 or greater
-* RHEL x86\_64 9.3 or greater.
-* Installation and configuration of Ansible on a control node to perform the automation.
+- Ansible 2.16.0 or greater
+- Python 3.10.0 or greater
+- RHEL x86_64 9.3 or greater.
+- Installation and configuration of Ansible on a control node to perform the automation.
 
 You must provide the following external services:
 
-* An OpenID Connect (OIDC) provider, such [RedHat Single Sign On](https://console.redhat.com/ansible/automation-hub/repo/published/redhat/sso/) or Amazon Web Services (AWS) Cognito.
-* A new PostgreSQL database.
+- An OpenID Connect (OIDC) provider, such [RedHat Single Sign On](https://console.redhat.com/ansible/automation-hub/repo/published/redhat/sso/) or Amazon Web Services (AWS) Cognito.
+- A new PostgreSQL database.
 
 ## External Services Configurations
 
 ### RedHat Single Sign On
 
-* [Trustification Keycloak](https://github.com/trustification/trustification/blob/release/1.2.z/docs/modules/admin/pages/cluster-preparing.adoc#keycloak)
+- [Trustification Keycloak](https://github.com/trustification/trustification/blob/release/1.2.z/docs/modules/admin/pages/cluster-preparing.adoc#keycloak)
 
 ### Postgresql
 
-Create a PostgreSQL database and configure your database credentials in the  environment variables, see 'Verifying the deployment section',
+Create a PostgreSQL database and configure your database credentials in the environment variables, see 'Verifying the deployment section',
 other database configurations are in the roles/tpa_single_node/vars/main.yml
 
-* [Trustification-PostgreSQL](https://github.com/trustification/trustification/blob/release/1.2.z/docs/modules/admin/pages/cluster-preparing.adoc#rds)
+- [Trustification-PostgreSQL](https://github.com/trustification/trustification/blob/release/1.2.z/docs/modules/admin/pages/cluster-preparing.adoc#rds)
 
 Utilize the steps below to understand how to setup and execute the provisioning.
 
@@ -79,6 +79,7 @@ On the controller node export the following environment variables:
 2. Choose between Keycloak or AWS Cognito, and update the `roles/tpa_single_node/defaults/main.yml` file accordingly.
 
 3If you are using AWS Cognito as your OIDC provider, then create an environment variable pointing to the Cognito domain:
+
 ```shell
 export TPA_OIDC_COGNITO_DOMAIN=<AWS Cognito Domain>
 ```
@@ -104,39 +105,36 @@ ansible_private_key_file=<path to private key>
 ```
 [defaults]
 inventory = ./inventory.ini
-host_key_checking = 
+host_key_checking =
 ```
-
 
 3. Path for TLS certificates files:
 
 Copy your certificate files in `certs/` directory using following names:
 
-- trust-cert.crt
-- trust-cert.key
-- rootCA.crt
+- server-cert.pem
+- server-key.pem
+- rootCA-cert.pem
 
 Optionally, the certs directory variable `tpa_single_node_certificates_dir` under `roles/tpa_single_node/vars/main.yml` file can also be updated with a directory certs for below variables:
 
-- tpa_single_node_root_ca
+- tpa_single_node_tls_trust_anchor
 
-- tpa_single_node_trust_cert_tls_crt_path
-- tpa_single_node_trust_cert_tls_key_path
+- tpa_single_node_tls_server_cert
+- tpa_single_node_tls_server_key
 
 Refer `roles/tpa_single_node/vars/main_example_aws.yml` and `roles/tpa_single_node/vars/main_example_nonaws.yml`
-
 
 ## Installation
 
 Run this collection
 
 ```shell
-export ANSIBLE_ROLES_PATH="roles/" ; 
+export ANSIBLE_ROLES_PATH="roles/" ;
 ansible-playbook -i inventory.ini play.yml -vv
 ```
 
 ## Contributing
-
 
 ## Support
 

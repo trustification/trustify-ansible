@@ -16,8 +16,9 @@ data:
 {%- if 'cognito' in tpa_single_node_oidc_issuer_url %}
 
           - clientId: {{ tpa_single_node_oidc_frontend_id }}
-            issuerUrl: {{ tpa_single_node_oidc_issuer_url }}
-
+            issuerUrl: {{ tpa_single_node_oidc_issuer_url }}           
+            tlsCaCertificates:
+              - "/etc/trust-anchor/tls.crt"
             additionalPermissions:
               - "ai"
               - "read.advisory"
@@ -89,7 +90,8 @@ data:
               "read:document": [ "ai", "read.advisory", "read.importer", "read.metadata", "read.sbom", "read.weakness" ]
               "update:document": [ "update.advisory", "update.importer", "update.metadata", "update.sbom", "update.weakness" ]
               "delete:document": [ "delete.advisory", "delete.importer", "delete.metadata", "delete.sbom", "delete.vulnerability", "delete.weakness" ]
-
+            tlsCaCertificates:
+              - "/etc/trust-anchor/tls.crt"
           - clientId: cli
             issuerUrl: {{ tpa_single_node_oidc_issuer_url }}
             scopeMappings: *keycloakScopeMappings

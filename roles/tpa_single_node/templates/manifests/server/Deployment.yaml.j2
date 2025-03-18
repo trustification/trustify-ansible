@@ -126,6 +126,12 @@ spec:
                 secretKeyRef:
                   name: oidc_secret
                   key: front_end
+{% if tpa_single_node_oidc_tls_insecure == 'true' %}
+            - name: SWAGGER_UI_OIDC_TLS_INSECURE
+              value: "true"
+{% endif %}
+            - name: SWAGGER_UI_OIDC_TLS_CA_CERTIFICATES
+              value: "/etc/trust-anchor/tls.crt"
             - name: UI_ISSUER_URL
               value: "{{ tpa_single_node_oidc_issuer_url }}"
             - name: UI_CLIENT_ID
@@ -160,11 +166,14 @@ spec:
             - mountPath: /etc/tls
               name: tls
               readOnly: true
-            - name: config-auth
-              mountPath: /etc/config/auth.yaml
+            - mountPath: /etc/config/auth.yaml
+              name: config-auth
               subPath: auth.yaml
-            - name: oidc-secret
-              mountPath: /etc/oidcsecret
+            - mountPath: /etc/oidcsecret
+              name: oidc-secret
+            - mountPath: /etc/trust-anchor
+              name: trust_anchor
+              readOnly: true
 {% if tpa_single_node_storage_region == 'None' %}
             - name: storage
               mountPath: /data/storage
@@ -175,7 +184,7 @@ spec:
       volumes:
         - name: tls
           secret:
-            secretName: tls_cert
+            secretName: tls_server_cert
         - name: config-auth
           configMap:
             name: server-api-auth
@@ -191,3 +200,6 @@ spec:
           secret:
             secretName: storage_secret
 {% endif %}
+        - name: trust_anchor
+          configMap:
+            name: trust-anchor
