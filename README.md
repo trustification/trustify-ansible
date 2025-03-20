@@ -43,16 +43,16 @@ You must provide the following external services:
 
 ## External Services Configurations
 
-### RedHat Single Sign On
+### RedHat Single Sign On OIDC
 
-- [Trustification Keycloak](https://github.com/trustification/trustification/blob/release/1.2.z/docs/modules/admin/pages/cluster-preparing.adoc#keycloak)
+- [Red Hat Single Sing On](https://access.redhat.com/products/red-hat-single-sign-on/)
+- [Setup RHSSO](TODO)
+- [Setup Cognito](TODO)
 
 ### Postgresql
 
 Create a PostgreSQL database and configure your database credentials in the environment variables, see 'Verifying the deployment section',
 other database configurations are in the roles/tpa_single_node/vars/main.yml
-
-- [Trustification-PostgreSQL](https://github.com/trustification/trustification/blob/release/1.2.z/docs/modules/admin/pages/cluster-preparing.adoc#rds)
 
 Utilize the steps below to understand how to setup and execute the provisioning.
 
@@ -78,11 +78,16 @@ On the controller node export the following environment variables:
 
 2. Choose between Keycloak or AWS Cognito, and update the `roles/tpa_single_node/defaults/main.yml` file accordingly.
 
-3If you are using AWS Cognito as your OIDC provider, then create an environment variable pointing to the Cognito domain:
+3. If you are using AWS Cognito as your OIDC provider, then create an environment variable pointing to the Cognito domain:
 
 ```shell
 export TPA_OIDC_COGNITO_DOMAIN=<AWS Cognito Domain>
 ```
+4. By default is executed a single importer instance with four concurrent job, if is needed is possible to have four
+   importer instance with a single job inside of each configuring 
+   ```
+   tpa_single_node_importer: multiple
+   ```
 
 ## Provision
 
@@ -142,7 +147,7 @@ Support tickets for RedHat Trusted Profile Analyzer can be opened at https://acc
 
 ## Release notes and Roadmap
 
-Release notes can be found [here](https://docs.redhat.com/en/documentation/red_hat_trusted_profile_analyzer/1.2/html/release_notes/index).
+Release notes can be found [here](https://docs.redhat.com/en/documentation/red_hat_trusted_profile_analyzer/2.0/html/release_notes/index).
 
 ## Related Information
 

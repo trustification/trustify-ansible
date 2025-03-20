@@ -3,6 +3,7 @@ TRUST_ANCHOR='rootCA'
 CERTS=('server')
 CSR_CONFIG='server.cnf'
 CERT_DIR='./certs'
+IP='192.168.56.0' # Replace with your IP address
 
 mkdir -p "$CERT_DIR"
 
@@ -39,13 +40,13 @@ C  = US
 ST = North Carolina
 L  = Raleigh
 O  = Red Hat Inc.
-CN = 192.168.56.0  # Replace with your IP address
+CN = ${IP}
 
 [ req_ext ]
 subjectAltName = @alt_names
 
 [ alt_names ]
-IP.1 = 192.168.56.0  # Replace with your IP address
+IP.1 = ${IP}
 EOF
 
 
