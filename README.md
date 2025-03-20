@@ -47,7 +47,7 @@ You must provide the following external services:
 
 - [Red Hat Single Sing On](https://access.redhat.com/products/red-hat-single-sign-on/)
 - [Setup RHSSO](TODO)
-- [Setup Cognito](TODO)
+- [Setup Cognito](https://github.com/trustification/trustify/blob/main/docs/book/modules/admin/pages/infrastructure.adoc)
 
 ### Postgresql
 
