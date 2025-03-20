@@ -27,7 +27,7 @@ basicConstraints = CA:TRUE
 keyUsage = digitalSignature, keyCertSign
 EOF
 
-cat > ${CERT_DIR}/${CSR_CONFIG} <<EOF
+cat > ${CERT_DIR}/${CSR_CONFIG} <<-EOF
 [ req ]
 default_bits       = 2048
 prompt             = no
