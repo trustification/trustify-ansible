@@ -1,6 +1,10 @@
 # VM testing
 
 This directory contains tooling to (manually) test the collection using Vagrant.
+Is possible use plain http for the local development configuring
+```
+tpa_single_node_ui_tls: 'false'
+```
 
 General prerequisites:
 Vagrant 2.4.1 or later https://developer.hashicorp.com/vagrant/downloads
@@ -20,6 +24,7 @@ Run as a normal user
 ```
 vagrant plugin install vagrant-libvirt
 vagrant plugin install vagrant-registration
+vagrant plugin install vagrant-scp
 ```
 
 Run as admin

@@ -10,12 +10,14 @@ For Linux systems only:
 export SELINUX_VOLUME_OPTIONS=':Z'
 ```
 
+#### to use http for the local development:
+
 ```shell
 cd vm-testing/compose
-podman-compose -f compose.yaml up
+podman-compose -f compose-http.yaml up
 ```
 
 ```shell
 cd vm-testing/compose
-podman-compose -f compose.yaml down
+podman-compose -f compose-http.yaml down
 ```
