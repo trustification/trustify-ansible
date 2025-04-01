@@ -14,10 +14,10 @@ export SELINUX_VOLUME_OPTIONS=':Z'
 
 ```shell
 cd vm-testing/compose
-podman-compose -f compose-http.yaml up
+podman-compose -f compose.yaml up
 ```
 
 ```shell
 cd vm-testing/compose
-podman-compose -f compose-http.yaml down
+podman-compose -f compose.yaml down
 ```
