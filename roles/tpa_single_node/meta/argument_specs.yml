@@ -70,6 +70,11 @@ argument_specs:
         type: "str"
         version_added: "2.0.0"
         default: "trustify"
+      tpa_single_node_pg_admin_db:
+        description: "DB Admin name."
+        type: "str"
+        version_added: "2.0.0"
+        default: "postgres"
       tpa_single_node_pg_admin:
         description: "DB admin user."
         type: "str"
@@ -91,7 +96,7 @@ argument_specs:
         required: true
         version_added: "2.0.0"
       tpa_single_node_pg_ssl_mode:
-        description: "DB SSL mode require/allow."
+        description: "DB SSL mode require/disable."
         type: "str"
         version_added: "2.0.0"
         default: "require"
