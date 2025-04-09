@@ -8,7 +8,7 @@
 
 - name: Run init-db.sql
   ansible.builtin.command: "psql postgresql://{{ tpa_single_node_pg_admin }}:{{ tpa_single_node_pg_admin_passwd }}@\
-      {{ tpa_single_node_pg_host }}:{{ tpa_single_node_pg_port }}/{{ tpa_single_node_pg_db }}?sslmode={{ tpa_single_node_pg_ssl_mode }} \
+      {{ tpa_single_node_pg_host }}:{{ tpa_single_node_pg_port }}/{{ tpa_single_node_pg_admin_db }}?sslmode={{ tpa_single_node_pg_ssl_mode }} \
       -v ON_ERROR_STOP=1 \
       -v db_name={{ tpa_single_node_pg_db }} \
       -v db_user={{ tpa_single_node_pg_user }} \
