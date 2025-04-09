@@ -38,9 +38,8 @@ The RHTPA Ansible collection deploys the following RHTPA components:
 ### OIDC providers
 
 * [Red Hat Single Sign-On](https://access.redhat.com/products/red-hat-single-sign-on/)
+* [Setup RHSSO](https://github.com/trustification/trustify/blob/main/docs/book/modules/admin/pages/infrastructure.adoc#keycloak)
 * [Setup AWS Cognito](https://github.com/trustification/trustify/blob/main/docs/book/modules/admin/pages/infrastructure.adoc)
-
-[//]: <* [Setup RHSSO](TODO) - Add back to the list once content is written.>
 
 ### PostgreSQL database
 
