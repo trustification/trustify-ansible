@@ -46,7 +46,7 @@ You must provide the following external services:
 ### RedHat Single Sign On OIDC
 
 - [Red Hat Single Sing On](https://access.redhat.com/products/red-hat-single-sign-on/)
-- [Setup RHSSO](TODO)
+- [Setup RHSSO](https://github.com/trustification/trustify/blob/main/docs/book/modules/admin/pages/infrastructure.adoc#keycloak)
 - [Setup Cognito](https://github.com/trustification/trustify/blob/main/docs/book/modules/admin/pages/infrastructure.adoc)
 
 ### Postgresql
