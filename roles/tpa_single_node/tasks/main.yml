@@ -1,13 +1,14 @@
 ---
 - name: Get IP of the current node
   ansible.builtin.set_fact:
-    tpa_single_node_rhel_host: "{{ ansible_ssh_host }}"
+    # tpa_single_node_rhel_host: "{{ ansible_ssh_host }}"
+    tpa_single_node_rhel_host: "10.0.148.184"
 
 - name: Set a variable about RHEL
   ansible.builtin.set_fact:
     rhel: false
 
-- name: Set a variable if is a RHEL as expected
+- name: Set rhel variable
   ansible.builtin.set_fact:
     rhel: true
   when:
@@ -15,16 +16,32 @@
     - ansible_facts['distribution_major_version'] == '9'
     - (ansible_facts['distribution_version'] | split('.'))[1] | int >= 3
 
+- name: Set a variable about fedora
+  ansible.builtin.set_fact:
+    fedora: false
+
+- name: Set fedora variable
+  ansible.builtin.set_fact:
+    fedora: true
+  when:
+    - ansible_facts['distribution'] == 'Fedora'
+    - ansible_facts['distribution_major_version'] == '41' or
+      ansible_facts['distribution_major_version'] == '42'
+
 - name: Install Operating System Components
   ansible.builtin.include_tasks: os.yml
-  when: rhel
+  when:
+    - rhel
+    - fedora
   args:
     apply:
       become: true
 
 - name: Execute Podman Actions
   ansible.builtin.include_tasks: podman.yml
-  when: rhel
+  when:
+    - rhel
+    - fedora
   args:
     apply:
       become: true
