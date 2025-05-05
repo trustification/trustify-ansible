@@ -44,6 +44,7 @@ Deploy the [RHTPA](https://docs.redhat.com/en/documentation/red_hat_trusted_prof
 | tpa_single_node_storage_access_key | Read from 'TPA_STORAGE_ACCESS_KEY' env var | str |  |
 | tpa_single_node_storage_secret_key | Read from 'TPA_STORAGE_SECRET_KEY' env var | str |  |
 | tpa_single_node_storage_bucket | Read from 'TPA_STORAGE_S3_BUCKET' env var | str |  |
+| tpa_single_node_storage_s3_trust_anchors | Read from 'TPA_STORAGE_S3_TRUST_ANCHORS' env var, trust anchors separated by , | str |  |
 | tpa_single_node_storage_region | Read from 'TPA_STORAGE_REGION' env var | str |  |
 | tpa_single_node_storage_minio_endpoint | Read from 'TPA_STORAGE_MINIO_ENDPOINT' env var | str |  |
 | tpa_single_node_storage_secret | storage-secret.yaml path on the target machine | str |  `/etc/rhtpa/manifests/storage-secret.yaml`  |

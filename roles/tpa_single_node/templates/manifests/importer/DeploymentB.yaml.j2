@@ -105,6 +105,10 @@ spec:
               value: "{{ tpa_single_node_storage_bucket }}"
             - name: TRUSTD_S3_REGION
               value: "{{ tpa_single_node_storage_region }}"
+{% if tpa_single_node_storage_s3_trust_anchors != "None" %}
+            - name: TRUSTD_S3_TRUST_ANCHORS
+              value: "{{ tpa_single_node_storage_s3_trust_anchors }}"
+{% endif %}
 {% if tpa_single_node_storage_minio_endpoint != "None" %}
             - name: TRUSTD_S3_ENDPOINT
               value: "{{ tpa_single_node_storage_minio_endpoint }}"
