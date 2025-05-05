@@ -114,6 +114,10 @@ spec:
               value: "{{ tpa_single_node_storage_bucket }}"
             - name: TRUSTD_S3_REGION
               value: "{{ tpa_single_node_storage_region }}"
+{ % if tpa_single_node_storage_s3_trust_anchors != "None" % }
+            - name: TRUSTD_S3_TRUST_ANCHORS
+              value: "{{ tpa_single_node_storage_s3_trust_anchors }}"
+{ % endif % }
 {% endif %}
             - name: SWAGGER_UI_OIDC_ISSUER_URL
               value: "{{ tpa_single_node_oidc_issuer_url }}"

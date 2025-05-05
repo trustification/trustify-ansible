@@ -10,3 +10,9 @@ metadata:
 data:
   tls.crt: |
     {{ lookup('file', tpa_single_node_tls_trust_anchor_cert) | indent (4)}}
+  { % if tpa_single_node_storage_s3_trust_anchors != "None" % }
+  { % for item in tpa_single_node_storage_s3_trust_anchors.split(',') % }
+  tls_{{ loop.index }}.crt: |
+    {{ lookup('file', item) | indent (4) }}
+  { % endfor % }
+  { % endif % }
