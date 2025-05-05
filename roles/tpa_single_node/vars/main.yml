@@ -44,6 +44,11 @@ tpa_single_node_storage_access_key: "{{ lookup('env', 'TPA_STORAGE_ACCESS_KEY') 
 tpa_single_node_storage_secret_key: "{{ lookup('env', 'TPA_STORAGE_SECRET_KEY') | default('None', true) }}" # S3/minio root password
 tpa_single_node_storage_bucket: "{{ lookup('env', 'TPA_STORAGE_BUCKET') | default('None', true) }}" # S3/minio bucket
 tpa_single_node_storage_region: "{{ lookup('env', 'TPA_STORAGE_REGION') | default('None', true) }}" # S3/minio region
+<<<<<<< HEAD
+=======
+tpa_single_node_storage_minio_endpoint: "{{ lookup('env', 'TPA_STORAGE_MINIO_ENDPOINT') | default('None', true) }}" # Minio endpoint
+tpa_single_node_storage_s3_trust_anchors: "{{ lookup('env', 'TPA_STORAGE_TRUSTD_S3_TRUST_ANCHORS') | default('None', true) }}" # S£/minio trust anchors
+>>>>>>> b8cd997 (Trustd S3 Trust anchors)
 
 # TSL Certificates
 tpa_single_node_tls_trust_anchor_cert: "{{ tpa_single_node_certificates_dir }}/rootCA-cert.pem"

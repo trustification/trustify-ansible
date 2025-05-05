@@ -150,6 +150,19 @@ argument_specs:
         type: "str"
         required: false
         version_added: "2.0.0"
+<<<<<<< HEAD
+=======
+      tpa_single_node_storage_s3_trust_anchors:
+        description: "Read from 'TPA_STORAGE_TRUSTD_S3_TRUST_ANCHORS' env var"
+        type: "str"
+        required: false
+        version_added: "2.0.1"
+      tpa_single_node_storage_minio_endpoint:
+        description: "Read from 'TPA_STORAGE_MINIO_ENDPOINT' env var"
+        type: "str"
+        required: false
+        version_added: "2.0.0"
+>>>>>>> b8cd997 (Trustd S3 Trust anchors)
       tpa_single_node_tls_trust_anchor_cert:
         description: "rootCA path on the controller machine"
         type: "str"
