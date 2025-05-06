@@ -13,6 +13,7 @@
       {%- for path in paths -%}
       {%- set filename = path.split('/')[-1].strip() -%}
       /etc/s3-trust-anchors/{{ filename }}{{ ',' if not loop.last else '' }}
+      {%- endfor -%}
   when: tpa_single_node_storage_trust_anchors is defined and tpa_single_node_storage_trust_anchors != 'None'
 
 - name: Generate S3 Trust Anchors ConfigMap
