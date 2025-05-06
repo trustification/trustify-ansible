@@ -3,7 +3,8 @@ TRUST_ANCHOR='rootCA'
 CERTS=('server')
 CSR_CONFIG='server.cnf'
 CERT_DIR='./certs'
-IP='192.168.56.0' # Replace with your IP address
+CN='localhost'
+IP='10.0.152.23' # Replace with your IP address
 
 mkdir -p "$CERT_DIR"
 
@@ -40,7 +41,7 @@ C  = US
 ST = North Carolina
 L  = Raleigh
 O  = Red Hat Inc.
-CN = ${IP}
+CN = ${CN}
 
 [ req_ext ]
 subjectAltName = @alt_names

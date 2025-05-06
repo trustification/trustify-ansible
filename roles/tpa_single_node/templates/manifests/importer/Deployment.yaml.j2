@@ -106,6 +106,10 @@ spec:
               value: "{{ tpa_single_node_storage_bucket }}"
             - name: TRUSTD_S3_REGION
               value: "{{ tpa_single_node_storage_region }}"
+{% if s3_trust_anchors_list is defined %}
+            - name: TRUSTD_S3_TRUST_ANCHORS
+              value: "{{ s3_trust_anchors_list }}"
+{% endif %}
 {% endif %}
           ports:
             - containerPort: 9010
@@ -118,6 +122,12 @@ spec:
 {% else %}
             - name: storage-secret
               mountPath: /etc/storagesecret
+              readOnly: true
+{% if s3_trust_anchors_list is defined %}
+            - mountPath: /etc/s3-trust-anchors
+              name: s3-trust-anchors
+              readOnly: true
+{% endif %}
 {% endif %}
             - name: workdir
               mountPath: /data/workdir
@@ -130,6 +140,11 @@ spec:
         - name: storage-secret
           secret:
             secretName: storage_secret
+{% if s3_trust_anchors_list is defined %}
+        - name: s3-trust-anchors
+          configMap:
+            name: s3-trust-anchors
+{% endif %}
 {% endif %}
         - name: workdir
           persistentVolumeClaim:
