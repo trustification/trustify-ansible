@@ -18,6 +18,15 @@
   delay: 5
   until: result.rc == 0
 
+- name: Set configmaps for importer
+  ansible.builtin.set_fact:
+    importer_configmaps: |
+      {{
+        [tpa_single_node_kube_manifest_dir + '/ConfigMaps/s3-trust-anchors.yaml']
+        if s3_trust_anchors_configmap_result is defined and s3_trust_anchors_configmap_result.path | length > 0
+        else []
+      }}
+
 - name: Deploy importer
   ansible.builtin.include_tasks: install_manifest.yml
   vars:
@@ -26,3 +35,4 @@
       systemd_file: importer
       network: "{{ tpa_single_node_podman_network }}"
       kube_file_content: "{{ lookup('ansible.builtin.template', 'manifests/importer/Deployment.yaml.j2') | from_yaml }}"
+      configmaps: "{{ importer_configmaps }}"
