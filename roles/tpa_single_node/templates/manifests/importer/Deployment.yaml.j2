@@ -1,10 +1,10 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: importer
+  name: {{ manifest_name }}
   namespace: "{{ tpa_single_node_namespace }}"
   labels:
-    app: importer
+    app: {{ manifest_name }}
     app.kubernetes.io/version: 2.0.0
 spec:
   replicas: 1
