@@ -30,39 +30,47 @@
 - name: Deploy importerA
   ansible.builtin.include_tasks: install_manifest.yml
   vars:
+    manifest_name: importerA
+    concurrency: 1
     podman_spec:
       state: started
       systemd_file: importerA
       network: "{{ tpa_single_node_podman_network }}"
-      kube_file_content: "{{ lookup('ansible.builtin.template', 'manifests/importer/DeploymentA.yaml.j2') | from_yaml }}"
+      kube_file_content: "{{ lookup('ansible.builtin.template', 'manifests/importer/Deployment.yaml.j2', vars={'importer_name': importerA}) | from_yaml }}"
       configmaps: "{{ importer_configmaps }}"
 
 - name: Deploy importerB
   ansible.builtin.include_tasks: install_manifest.yml
   vars:
+    manifest_name: importerB
+    concurrency: 1
     podman_spec:
       state: started
       systemd_file: importerB
       network: "{{ tpa_single_node_podman_network }}"
-      kube_file_content: "{{ lookup('ansible.builtin.template', 'manifests/importer/DeploymentB.yaml.j2') | from_yaml }}"
+      kube_file_content: "{{ lookup('ansible.builtin.template', 'manifests/importer/Deployment.yaml.j2', vars={'importer_name': importerB}) | from_yaml }}"
       configmaps: "{{ importer_configmaps }}"
 
 - name: Deploy importerC
   ansible.builtin.include_tasks: install_manifest.yml
   vars:
+    manifest_name: importerC
+    concurrency: 1
     podman_spec:
       state: started
       systemd_file: importerC
       network: "{{ tpa_single_node_podman_network }}"
-      kube_file_content: "{{ lookup('ansible.builtin.template', 'manifests/importer/DeploymentC.yaml.j2') | from_yaml }}"
+      kube_file_content: "{{ lookup('ansible.builtin.template', 'manifests/importer/Deployment.yaml.j2', vars={'importer_name': importerC}) | from_yaml }}"
       configmaps: "{{ importer_configmaps }}"
 
 - name: Deploy importerD
   ansible.builtin.include_tasks: install_manifest.yml
   vars:
+    manifest_name: importerD
+    concurrency: 1
     podman_spec:
       state: started
       systemd_file: importerD
       network: "{{ tpa_single_node_podman_network }}"
-      kube_file_content: "{{ lookup('ansible.builtin.template', 'manifests/importer/DeploymentD.yaml.j2') | from_yaml }}"
+      kube_file_content: "{{ lookup('ansible.builtin.template', 'manifests/importer/Deployment.yaml.j2', vars={'importer_name': importerD}) | from_yaml }}"
       configmaps: "{{ importer_configmaps }}"

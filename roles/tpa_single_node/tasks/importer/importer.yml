@@ -30,6 +30,8 @@
 - name: Deploy importer
   ansible.builtin.include_tasks: install_manifest.yml
   vars:
+    manifest_name: importer
+    concurrency: 4
     podman_spec:
       state: started
       systemd_file: importer
