@@ -6,14 +6,13 @@
     mode: "0600"
   register: trust_anchor_configmap_result
 
-- name: Build s3 trust anchors target list
-  set_fact:
+- name: Build S3 Trust Anchors target list
+  ansible.builtin.set_fact:
     s3_trust_anchors_list: >-
       {%- set paths = tpa_single_node_storage_trust_anchors.split(',') -%}
       {%- for path in paths -%}
       {%- set filename = path.split('/')[-1].strip() -%}
       /etc/s3-trust-anchors/{{ filename }}{{ ',' if not loop.last else '' }}
-      {%- endfor -%}
   when: tpa_single_node_storage_trust_anchors is defined and tpa_single_node_storage_trust_anchors != 'None'
 
 - name: Generate S3 Trust Anchors ConfigMap
