@@ -16,7 +16,7 @@
         ] +
         (
           [tpa_single_node_kube_manifest_dir + '/ConfigMaps/s3-trust-anchors.yaml']
-          if s3_trust_anchors_configmap_result is defined and s3_trust_anchors_configmap_result.path | length > 0
+          if s3_trust_anchors_list is defined and s3_trust_anchors_list | length > 0
           else []
         )
       }}
