@@ -1,0 +1,15 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: s3-trust-anchors
+  namespace: {{ tpa_single_node_namespace }}
+  labels:
+    app.kubernetes.io/name: s3-trust-anchors
+    app.kubernetes.io/component: tls
+    app.kubernetes.io/instance: redhat-trusted-profile-analyzer
+data:
+{% for filepath in tpa_single_node_storage_trust_anchors.split(',') %}
+  {%- set filename = filepath.strip().split('/')[-1] %}
+  {{ filename }}: |-
+    {{ lookup('file', filepath.strip()) | indent(4) }}
+{% endfor %}
