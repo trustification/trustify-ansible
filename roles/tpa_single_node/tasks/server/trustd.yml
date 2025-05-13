@@ -6,6 +6,21 @@
     mode: "0600"
   register: configmap_server_api
 
+- name: Set configmaps for server
+  ansible.builtin.set_fact:
+    server_configmaps: >-
+      {{
+        [
+          tpa_single_node_kube_manifest_dir + '/ConfigMaps/server-api.yaml',
+          tpa_single_node_kube_manifest_dir + '/ConfigMaps/trust-anchor.yaml'
+        ] +
+        (
+          [tpa_single_node_kube_manifest_dir + '/ConfigMaps/s3-trust-anchors.yaml']
+          if s3_trust_anchors_list is defined and s3_trust_anchors_list | length > 0
+          else []
+        )
+      }}
+
 - name: Deploy server
   ansible.builtin.include_tasks: install_manifest.yml
   vars:
@@ -14,6 +29,4 @@
       systemd_file: server
       network: "{{ tpa_single_node_podman_network }}"
       kube_file_content: "{{ lookup('ansible.builtin.template', 'manifests/server/Deployment.yaml.j2') | from_yaml }}"
-      configmaps:
-        - "{{ tpa_single_node_kube_manifest_dir }}/ConfigMaps/server-api.yaml"
-        - "{{ tpa_single_node_kube_manifest_dir }}/ConfigMaps/trust-anchor.yaml"
+      configmaps: "{{ server_configmaps }}"

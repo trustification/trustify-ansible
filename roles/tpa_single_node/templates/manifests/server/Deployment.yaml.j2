@@ -114,6 +114,10 @@ spec:
               value: "{{ tpa_single_node_storage_bucket }}"
             - name: TRUSTD_S3_REGION
               value: "{{ tpa_single_node_storage_region }}"
+{% if s3_trust_anchors_list is defined %}
+            - name: TRUSTD_S3_TRUST_ANCHORS
+              value: "{{ s3_trust_anchors_list }}"
+{% endif %}
 {% endif %}
             - name: SWAGGER_UI_OIDC_ISSUER_URL
               value: "{{ tpa_single_node_oidc_issuer_url }}"
@@ -168,7 +172,7 @@ spec:
             - mountPath: /etc/oidcsecret
               name: oidc-secret
             - mountPath: /etc/trust-anchor
-              name: trust_anchor
+              name: trust-anchor
               readOnly: true
 {% if tpa_single_node_storage_region == 'None' %}
             - name: storage
@@ -176,6 +180,12 @@ spec:
 {% else %}
             - name: storage-secret
               mountPath: /etc/storagesecret
+              readOnly: true
+{% if s3_trust_anchors_list is defined %}
+            - mountPath: /etc/s3-trust-anchors
+              name: s3-trust-anchors
+              readOnly: true
+{% endif %}
 {% endif %}
       volumes:
         - name: tls
@@ -195,7 +205,12 @@ spec:
         - name: storage-secret
           secret:
             secretName: storage_secret
+{% if s3_trust_anchors_list is defined %}
+        - name: s3-trust-anchors
+          configMap:
+            name: s3-trust-anchors
 {% endif %}
-        - name: trust_anchor
+{% endif %}
+        - name: trust-anchor
           configMap:
             name: trust-anchor
