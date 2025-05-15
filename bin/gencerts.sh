@@ -3,6 +3,7 @@ TRUST_ANCHOR='rootCA'
 CERTS=('server')
 CSR_CONFIG='server.cnf'
 CERT_DIR='./certs'
+CN='localhost'
 IP='192.168.56.0' # Replace with your IP address
 
 mkdir -p "$CERT_DIR"
@@ -27,7 +28,7 @@ basicConstraints = CA:TRUE
 keyUsage = digitalSignature, keyCertSign
 EOF
 
-cat > ${CERT_DIR}/${CSR_CONFIG} <<EOF
+cat > ${CERT_DIR}/${CSR_CONFIG} <<-EOF
 [ req ]
 default_bits       = 2048
 prompt             = no
@@ -40,7 +41,7 @@ C  = US
 ST = North Carolina
 L  = Raleigh
 O  = Red Hat Inc.
-CN = ${IP}
+CN = ${CN}
 
 [ req_ext ]
 subjectAltName = @alt_names

@@ -150,11 +150,11 @@ argument_specs:
         type: "str"
         required: false
         version_added: "2.0.0"
-      tpa_single_node_storage_minio_endpoint:
-        description: "Read from 'TPA_STORAGE_MINIO_ENDPOINT' env var"
+      tpa_single_node_storage_trust_anchors:
+        description: "Read from 'TPA_STORAGE_TRUST_ANCHORS' env var, trust anchors separated by ,"
         type: "str"
         required: false
-        version_added: "2.0.0"
+        version_added: "2.0.1"
       tpa_single_node_tls_trust_anchor_cert:
         description: "rootCA path on the controller machine"
         type: "str"
