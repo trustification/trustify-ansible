@@ -1,5 +1,6 @@
 ---
-- name: Install System Packages dependencies
+- name: Install System Packages dependencies for RHEL
   ansible.builtin.package:
+    when: rhel
     name: "{{ tpa_single_node_system_packages }}"
     state: "present"

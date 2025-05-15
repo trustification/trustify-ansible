@@ -7,7 +7,9 @@
     fail_msg: "tpa_single_node_registry_username doesn't exist, export the registry username and password"
 
 - name: Podman login to registry.redhat.io
-  when: rhel
+  when:
+    - rhel
+    - fedora
   ansible.builtin.command: podman login registry.redhat.io -u {{ tpa_single_node_registry_username }} -p {{ tpa_single_node_registry_password }}
   register: podman_login_result
   changed_when: '"Already logged in" not in podman_login_result'
@@ -44,7 +46,9 @@
   changed_when: false
 
 - name: Pull trustification image from registry.redhat.io
-  when: rhel
+  when:
+    - rhel
+    - fedora
   ansible.builtin.command:
     cmd: "podman pull {{ tpa_single_node_trustification_image }}"
   changed_when: false
