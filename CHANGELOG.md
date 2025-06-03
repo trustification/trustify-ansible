@@ -1,3 +1,13 @@
+## [2.1.0] - 2025-xx-xx
+
+### Release Summary
+
+### Minor Changes
+
+### Security Fixes
+
+### Bugfixes
+
 ## [2.0.1] - 2025-05-19
 
 ### Release Summary
