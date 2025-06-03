@@ -147,7 +147,7 @@ objects:
         app.kubernetes.io/name: create-db
         app.kubernetes.io/component: database
         app.kubernetes.io/instance: redhat-trusted-profile-analyzer
-        app.kubernetes.io/version: 2.0.1
+        app.kubernetes.io/version: 2.1.0
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/part-of: trustify
       annotations:
@@ -180,7 +180,7 @@ objects:
         app.kubernetes.io/name: create-db
         app.kubernetes.io/component: database
         app.kubernetes.io/instance: redhat-trusted-profile-analyzer
-        app.kubernetes.io/version: 2.0.1
+        app.kubernetes.io/version: 2.1.0
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/part-of: trustify
       annotations:
@@ -266,7 +266,7 @@ objects:
         app.kubernetes.io/name: migrate-db
         app.kubernetes.io/component: database
         app.kubernetes.io/instance: redhat-trusted-profile-analyzer
-        app.kubernetes.io/version: 2.0.1
+        app.kubernetes.io/version: 2.1.0
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/part-of: trustify
       annotations:
@@ -333,7 +333,7 @@ objects:
         app.kubernetes.io/name: server-auth
         app.kubernetes.io/component: server
         app.kubernetes.io/instance: redhat-trusted-profile-analyzer
-        app.kubernetes.io/version: 2.0.1
+        app.kubernetes.io/version: 2.1.0
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/part-of: trustify
     data:
@@ -355,7 +355,7 @@ objects:
       labels:
         app.kubernetes.io/name: storage
         app.kubernetes.io/instance: redhat-trusted-profile-analyzer
-        app.kubernetes.io/version: 2.0.1
+        app.kubernetes.io/version: 2.1.0
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/part-of: trustify
     spec:
@@ -372,7 +372,7 @@ objects:
         app.kubernetes.io/name: server
         app.kubernetes.io/component: server
         app.kubernetes.io/instance: redhat-trusted-profile-analyzer
-        app.kubernetes.io/version: 2.0.1
+        app.kubernetes.io/version: 2.1.0
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/part-of: trustify
       annotations:
@@ -396,7 +396,7 @@ objects:
         app.kubernetes.io/name: server
         app.kubernetes.io/component: server
         app.kubernetes.io/instance: redhat-trusted-profile-analyzer
-        app.kubernetes.io/version: 2.0.1
+        app.kubernetes.io/version: 2.1.0
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/part-of: trustify
       annotations: null
@@ -522,7 +522,7 @@ objects:
         app.kubernetes.io/name: importer
         app.kubernetes.io/component: importer
         app.kubernetes.io/instance: redhat-trusted-profile-analyzer
-        app.kubernetes.io/version: 2.0.1
+        app.kubernetes.io/version: 2.1.0
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/part-of: trustify
       annotations: null
@@ -626,7 +626,7 @@ objects:
         app.kubernetes.io/name: server
         app.kubernetes.io/component: server
         app.kubernetes.io/instance: redhat-trusted-profile-analyzer
-        app.kubernetes.io/version: 2.0.1
+        app.kubernetes.io/version: 2.1.0
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/part-of: trustify
       annotations:
