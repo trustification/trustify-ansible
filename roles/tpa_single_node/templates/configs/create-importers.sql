@@ -29,3 +29,11 @@ SET
   revision=EXCLUDED.revision,
   configuration=EXCLUDED.configuration
 ;
+
+INSERT INTO IMPORTER (name, revision, state, last_change, configuration)
+VALUES ('quay-redhat-user-workloads', gen_random_uuid(), 0, now(), '{"quay":{"description":"SBOMs from konflux image attachments","period":"1d","disabled": true,"source":"quay.io","namespace":"redhat-user-workloads"}}'::jsonb)
+ON CONFLICT (name) DO UPDATE
+SET
+  revision=EXCLUDED.revision,
+  configuration=EXCLUDED.configuration
+;
