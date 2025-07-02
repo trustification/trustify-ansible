@@ -79,6 +79,11 @@ tpa_single_node_upload_limit: "{{ lookup('env', 'TPA_SERVER_UPLOAD_LIMIT') | def
 # Log Level
 tpa_single_node_log_filter: info
 
+# OTEL collector
+tpa_single_node_otel_collector_endpoint: "{{ lookup('env', 'TPA_OTEL_COLLECTOR_ENDPOINT') | default('None', true) }}"
+tpa_single_node_otel_metrics_enabled: "{{ lookup('env', 'TPA_OTEL_METRICS_ENABLED') | default('false', true) }}"
+tpa_single_node_otel_tracing_enabled: "{{ lookup('env', 'TPA_OTEL_TRACING_ENABLED') | default('false', true) }}"
+
 # defaults file for tpa_single_node
 tpa_single_node_system_packages:
   - podman

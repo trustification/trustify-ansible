@@ -83,6 +83,16 @@ You can have four importer instances with a single job for each instance by sett
 tpa_single_node_importer: multiple
 ```
 
+Tracing and monitoring of TPA can be enabled using the OTEL Collector. To activate metrics and tracing, set the following environment variables:
+```
+export TPA_OTEL_METRICS_ENABLED=true
+export TPA_OTEL_TRACING_ENABLED=true
+```
+In addition, configure the OTEL Collector endpoint by setting
+```
+export TPA_OTEL_COLLECTOR_ENDPOINT=<OTEL Collector endpoint>
+```
+
 ### Updating the inventory and the playbook
 
 To deploy RHTPA on a Red Hat Enterprise Linux version 9.3 or later do the following:

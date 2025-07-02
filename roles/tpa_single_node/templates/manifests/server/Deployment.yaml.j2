@@ -147,6 +147,24 @@ spec:
             - name: TRUSTD_DATASET_ENTRY_LIMIT
               value: "{{ tpa_single_node_upload_limit }}"
 {% endif %}
+{% if tpa_single_node_otel_collector_endpoint != 'None' %}
+            - name: OTEL_TRACES_SAMPLER
+              value: parentbased_traceidratio
+            - name: OTEL_TRACES_SAMPLER_ARG
+              value: '0.1'
+            - name: OTEL_EXPORTER_OTLP_ENDPOINT
+              value: "{{ tpa_single_node_otel_collector_endpoint }}"
+            - name: OTEL_BSP_MAX_EXPORT_BATCH_SIZE
+              value: "32"
+{% endif %}
+{% if tpa_single_node_otel_metrics_enabled != 'false' %}
+            - name: METRICS
+              value: "enabled"
+{% endif %}
+{% if tpa_single_node_otel_tracing_enabled != 'false' %}
+            - name: TRACING
+              value: "enabled"
+{% endif %}
           ports:
             - containerPort: 9010
               protocol: TCP
