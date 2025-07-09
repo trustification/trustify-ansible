@@ -61,6 +61,9 @@ Requires RHEL 9.3 or later.
 | tpa_single_node_server_json_limit           | HTTP Server JSON limit                                                 | str  |                                                                                                        |
 | tpa_single_node_upload_limit                | Upload limit for Files                                                 | str  |                                                                                                        |
 | tpa_single_node_storage_compression         | Compression logic for storage                                          | str  |                                                                                                        |
+| tpa_single_node_otel_metrics_enabled        | Enable OTEL metrics                                                    |  str |  `false`                                                                                               |
+| tpa_single_node_otel_tracing_enabled        | Enable OTEL tracing                                                    |  str |  `false`                                                                                               |
+| tpa_single_node_otel_collector_endpoint     | OTEL collector endpoint                                                |  str |  `None`                                                                                                |
 
 ## Example Playbook
 
