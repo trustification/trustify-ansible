@@ -1,12 +1,23 @@
-## [2.1.0] - 2025-07-xx
+## [2.1.0] - 2025-07-24
 
 ### Release Summary
+Bug Fix Release
 
 ### Minor Changes
+- TC-2498 Use extensible labels to manage extensible metadata for SBOMs and Advisories
 
 ### Security Fixes
 
 ### Bugfixes
+- TC-2606 Analysis/latest/component/<cpe> only returning a single root
+- TC-2677 SBOM link regression on 0.3.z branch
+- TC-2415 After uploading SBOM files with hundreds of CVEs, the dashboard page takes a lot of time to load and eventually shows an error
+- TC-2562 Importer pod stuck in pending state for PVC
+- TC-2418 Aggregate severity in a downloaded Advisory doesn't match the value displayed in the Advisory Explorer
+- TC-2431 The number of the total advisories in the dashboard is not the same as in the advisories tab
+- TC-2440 Search gets broken by tilde '~' character
+- TC-2658 Vulnerabilities not reported for go package
+- TC-2666 Labels - Field validation
 
 ## [2.0.1] - 2025-05-19
 
