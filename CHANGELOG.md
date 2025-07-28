@@ -1,4 +1,4 @@
-## [2.1.0] - 2025-07-24
+## [2.1.0] - 2025-07-28
 
 ### Release Summary
 Bug Fix Release
